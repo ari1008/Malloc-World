@@ -27,8 +27,8 @@ OBJS=    main.o
 all: $(OBJS)
 	$(LD) -o $(TARGET) $(OBJS) $(LDFLAGS)
 
-main.o: src/main.c
-	$(CC) -c $(CCFLAGS) src/main.c  -o main.o
+main.o: src/Sources/main.c
+	$(CC) -c $(CCFLAGS) src/Sources/main.c  -o main.o
 
 clean:
 	rm -f *.o $(TARGET)
