@@ -29,7 +29,7 @@ Area generateArea(unsigned short heigthArea,  unsigned short widthArea){
     area.heigthArea=heigthArea;
     area.widthArea=widthArea;
     area.chunk=malloc(sizeof(short)*heigthArea*widthArea);
-    for (int i=0;i<heigthArea;i++){
+    for (int y=0;y<heigthArea;y++){
         for(int x=0;x<widthArea;x++){
             area.chunk[x][y]=0;
         }

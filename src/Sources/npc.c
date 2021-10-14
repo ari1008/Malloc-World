@@ -10,8 +10,8 @@
 #include "../headers/npc.h"
 
 //  Npc default properties
-Npc npc = {
+/*Npc npc = {
     .worldId = NON_PLAYEUR_CHARACTER,
     .name = "Sizeof",
     .warehouse = NULL
-};
+};*/

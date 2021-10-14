@@ -12,6 +12,7 @@
 //  Include library
 #include <string.h>
 #include "items.h"
+#include "world.h"
 
 //  Properties of a warehouse
 typedef struct  {
