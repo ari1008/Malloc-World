@@ -11,7 +11,7 @@
 
 //  Material
 //  Wood Level
-/*Material stone = {
+Material stone = {
     .itemId = STONE,
     .name = "Pierre",
     .type = MATERIAL,
@@ -354,4 +354,3 @@ Potion lifePotionIII = {
     .quantityMax= 1,
     .durabilityCurrent = 0
 };
-*/

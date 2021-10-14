@@ -30,13 +30,14 @@
 
 
 int main(void) {
-    int rand = random();
+    int rand = randomMy();
     printf("Hello world!\n");
     printf("%d", rand);
+   // World test =generateWorld(rand);
     return 0;
 }
 
-int random(){
+int randomMy(){
     srand((unsigned)time(NULL));
     return rand()%(MAX-MIN+1) + MIN;
 }

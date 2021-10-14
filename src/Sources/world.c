@@ -17,7 +17,7 @@ World generateWorld (int seed){
     World mallocWorld;
     mallocWorld.seed=seed;
     Area area1;
-
+    return mallocWorld;
 
 }
 /*

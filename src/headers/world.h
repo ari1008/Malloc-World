@@ -53,7 +53,7 @@ typedef struct  {
 
 //  Generate a world from a seed
 World generateWorld (int seed);
-Area generateArea(unsigned  short heigthArea, unsigned  short widthArea)
+Area generateArea(unsigned  short heigthArea, unsigned  short widthArea);
 #endif // WORLD_H_INCLUDED
 
 

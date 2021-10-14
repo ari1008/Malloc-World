@@ -51,7 +51,6 @@ typedef enum {
     LIFE_POTION_III
 } Item_ID;
 
-typedef
 //   Give alias to type of item
 typedef enum  {
     MATERIAL,

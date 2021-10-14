@@ -13,5 +13,5 @@
 void SaveGame ();
 //  Load a Game from an file
 void LoadGame ();
-int random();
+int randomMy();
 #endif // MAIN_H_INCLUDED
