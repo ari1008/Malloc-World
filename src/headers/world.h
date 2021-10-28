@@ -34,9 +34,9 @@ typedef enum WorldObject_ID {
 
 //  Properties of the world's area
 typedef struct {
-    short** chunk;
-    unsigned  short heigthArea;
-    unsigned  short widthArea;
+    int** chunk;
+    int heigthArea;
+    int widthArea;
 } Area;
 
 //  Properties of the world
@@ -52,8 +52,10 @@ typedef struct  {
 } Position;
 
 //  Generate a world from a seed
-World generateWorld (int seed);
-Area generateArea(unsigned  short heigthArea, unsigned  short widthArea);
+int randomMy(int min, int max);
+World * generateWorld (int seed);
+void generateArea(Area area);
+void  displayArea(Area area);
 #endif // WORLD_H_INCLUDED
 
 

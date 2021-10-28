@@ -11,8 +11,10 @@
 #include "../headers/npc.h"
 #include "../headers/monster.h"
 #include "../headers/main.h"
-#define MAX 100
-#define MIN 1
+
+#define  MIN 10
+#define  MAX 100
+
 #define SIZE 1
 
 /*
@@ -30,15 +32,17 @@
 
 
 int main(void) {
-    int rand = randomMy();
-    printf("Hello world!\n");
-    printf("%d", rand);
-   // World test =generateWorld(rand);
+    World *world= generateWorld(1);
     return 0;
 }
 
-int randomMy(){
-    srand((unsigned)time(NULL));
-    return rand()%(MAX-MIN+1) + MIN;
+int randomWorld(){
+    int nombre = 0;
+    // Initialisation de la donnée seed
+    nombre = rand() % (40 + 5);
+    printf("Taille de rand %d\n", nombre);
+    return nombre;
+
 }
+
 

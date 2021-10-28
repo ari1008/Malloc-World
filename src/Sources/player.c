@@ -7,6 +7,7 @@
 */
 
 //  Includes library
+#include <stdlib.h>
 #include "../headers/player.h"
 
 //  Player's inventory default starter

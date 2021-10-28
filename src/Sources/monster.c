@@ -8,7 +8,7 @@
 
 //  Includes library
 #include "../headers/monster.h"
-
+#include <stdlib.h>
 // Monster default properties
 // SKELETON
 /*Monster skeleton = {

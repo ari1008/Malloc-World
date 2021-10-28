@@ -7,6 +7,7 @@
 */
 
 //  Includes library
+#include <stdlib.h>
 #include "../headers/resources.h"
 
 //  WOOD
