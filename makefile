@@ -49,7 +49,7 @@ npc.o: src/Sources/npc.c
 	$(CC) -o src/objets/npc.o  -c src/Sources/npc.c  $(CCFLAGS)
 
 player.o: src/Sources/player.c
-	$(CC) -o src/objets/player.o  -c src/Sources/npc.c  $(CCFLAGS)
+	$(CC) -o src/objets/player.o  -c src/Sources/player.c  $(CCFLAGS)
 
 #receipt.o: src/Sources/rec.c
 	#$(CC) -o src/headers/receipt.o  -c src/Sources/receipt.c  $(CCFLAGS)

@@ -54,8 +54,9 @@ typedef struct  {
 //  Generate a world from a seed
 int randomMy(int min, int max);
 World * generateWorld (int seed);
-void generateArea(Area area);
+void generateArea(Area area, int numberArea);
 void  displayArea(Area area);
+
 #endif // WORLD_H_INCLUDED
 
 

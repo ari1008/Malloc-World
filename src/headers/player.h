@@ -23,15 +23,31 @@ typedef struct  {
 
 //  Properties of a player
 typedef struct {
-    const WorldObject_ID worldId;
-    char username[20];
+    //const WorldObject_ID worldId;
+    char *username;
     short level;
     int xpCurrent;
     int xpNext;
     short hpCurrent;
     short hpMax;
-    Position position;
+    int x;
+    int y;
     Inventory inventory;
+    short area;
 } Player;
 
+Player *createPlayer();
+void play(World* world, Player* player);
+
+void move(World* world, Player* player);
+int* verification(Area  area,int x,int y);
+int moveHigh(Area area, int y, int x);
+int moveRight(Area area, int y, int x);
+int moveLow(Area area, int y, int x);
+int moveLeft(Area area, int y, int x);
+int displayPosition(int* position);
+void bottom(Area area, Player* player);
+void right( Area area, Player* player);
+void high(Area area, Player* player);
+void left(Area area,  Player* player);
 #endif // PLAYER_H_INCLUDED
