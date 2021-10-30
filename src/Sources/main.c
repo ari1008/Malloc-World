@@ -34,6 +34,7 @@
 
 
 int main(void) {
+    srand(time(NULL));
     World *world= generateWorld(1);
     Player *player = createPlayer();
     play(world, player);
@@ -43,7 +44,7 @@ int main(void) {
 int randomWorld(){
     int nombre = 0;
     // Initialisation de la donnée seed
-    nombre = rand() % (20 + 5);
+    nombre = rand() % (15 + 5);
     return nombre;
 
 }

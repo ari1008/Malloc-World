@@ -26,7 +26,6 @@ World *generateWorld (int seed){
         worldAll->area[numberArea].widthArea=randomWorld();
         worldAll->area[numberArea].chunk = malloc(sizeof(int *) *worldAll->area[numberArea].heigthArea);
         generateArea(worldAll->area[numberArea], numberArea);
-
     }
     return worldAll;
 
@@ -41,19 +40,21 @@ void  generateArea(Area area, int numberArea){
     }
     for (int y=0;y<area.heigthArea;y++){
         for (int x = 0; x<area.widthArea; x++){
-            if(y==0 && x==0){
-                area.chunk[y][x]=1;
+            if(y==0 && x==0) {
+                area.chunk[y][x] = 1;
             } else{
                 area.chunk[y][x]=0;
             }
         }
 
     }
+    travel(area, numberArea);
 }
 
 int randomMy(int min, int max){
-    srand((unsigned)time(NULL));
-    return  min + rand() % (max + 1 - min);
+    int nombre = 0;
+    nombre = rand() % (max + min);
+    return nombre;
 }
 
 void  displayArea(Area area){
@@ -61,8 +62,39 @@ void  displayArea(Area area){
     system(command);
     for (int y=0;y<area.heigthArea;y++){
         for (int x = 0; x<area.widthArea; x++){
-            printf("%d",area.chunk[y][x]);
+            printf("%d ",area.chunk[y][x]);
         }
         printf("\n");
     }
+    printf("\n");
+}
+
+void travel(Area area, int numberArea){
+    switch (numberArea) {
+        case 0:
+            checkCase(area, -2);
+            break;
+        case  1:
+            checkCase(area, -2);
+            checkCase(area, -3);
+            break;
+        case  2:
+            checkCase(area, -2);
+            checkCase(area, -3);
+            break;
+    }
+}
+
+void checkCase(Area area, int type){
+    int count=0;
+    int x=0;
+    int y=0;
+    do {
+        y=randomMy(0,area.heigthArea-1);
+        x=randomMy(0,area.widthArea-1);
+        if(area.chunk[y][x]==0){
+            area.chunk[y][x]=type;
+            count++;
+        }
+    }while(count==0);
 }

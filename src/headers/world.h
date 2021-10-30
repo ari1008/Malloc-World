@@ -56,7 +56,8 @@ int randomMy(int min, int max);
 World * generateWorld (int seed);
 void generateArea(Area area, int numberArea);
 void  displayArea(Area area);
-
+void  travel(Area area, int numberArea );
+void checkCase(Area area, int type);
 #endif // WORLD_H_INCLUDED
 
 

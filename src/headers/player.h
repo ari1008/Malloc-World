@@ -40,7 +40,7 @@ Player *createPlayer();
 void play(World* world, Player* player);
 
 void move(World* world, Player* player);
-int* verification(Area  area,int x,int y);
+int* verification(Area  area,int y,int x);
 int moveHigh(Area area, int y, int x);
 int moveRight(Area area, int y, int x);
 int moveLow(Area area, int y, int x);

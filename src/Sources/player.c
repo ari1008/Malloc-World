@@ -63,16 +63,11 @@ void move(World *world, Player* player){
     int stop = 0;
     displayArea(world->area[player->area]);
     do {
-
-        if(stop==2){
-            exit(1);
-        }
-        int *verif = verification(world->area[player->area], player->x, player->y);
+        int *verif = verification(world->area[player->area], player->y, player->x);
         int compass = displayPosition(verif);
         world->area[player->area].chunk[player->y][player->x] = 0;
         switch (compass) {
             case 0:
-                printf("Test  %d %d\n", player->y, player->x);
                 high(world->area[player->area], player);
                 displayArea(world->area[player->area]);
                 break;
@@ -89,32 +84,32 @@ void move(World *world, Player* player){
                 displayArea(world->area[player->area]);
                 break;
         }
-        stop++;
-    }while(1);
+        printf("Si vous voulez arrêter tapez 1\n");
+        scanf("%d",&stop);
+    }while(stop !=1);
 }
 
 void left(Area area,Player *player ){
     if(player->x == 0){
         area.chunk[player->y][area.widthArea-1]=1;
-        player->x=area.widthArea;
+        player->x=area.widthArea-1;
     }else{
-        area.chunk[player->y][player->x--]=1;
-        player->x--;
+        area.chunk[player->y][player->x-1]=1;
+        player->x=player->x-1;
     }
+
 }
 void high(Area area, Player *player){
-    printf("Test 1 %d %d\n", player->y, player->x);
     if(player->y == 0){
         area.chunk[area.heigthArea-1][player->x]=1;
-        player->y=area.heigthArea;
+        player->y=area.heigthArea-1;
     }else{
         area.chunk[player->y-1][player->x]=1;
         player->y--;
     }
-    printf("Test 2 %d %d\n", player->y, player->x);
 }
 void right(Area area, Player* player){
-    if(player->x == area.widthArea){
+    if(player->x == area.widthArea-1){
         area.chunk[player->y][0]=1;
         player->x=0;
     }else{
