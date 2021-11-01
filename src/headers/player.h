@@ -45,9 +45,23 @@ int moveHigh(Area area, int y, int x);
 int moveRight(Area area, int y, int x);
 int moveLow(Area area, int y, int x);
 int moveLeft(Area area, int y, int x);
-int displayPosition(int* position);
+
+int* displayPosition(int* position, int area, int* choice);
+void displayTravel(int position, int area, char* compass, int count);
+void displayResources(int position, char* compass, int count);
+void displayPlant(int plant, char* compass, int count);
+void displayWood(int wood, char* compass, int count);
+void displayMineral(int mineral, char* compass, int count);
+void displayPnj(int area, char* compass, int count);
+void displayMonster(int monster, char* compass, int count);
+
 void bottom(Area area, Player* player);
 void right( Area area, Player* player);
 void high(Area area, Player* player);
 void left(Area area,  Player* player);
+
+
+int* choseNumber(int count, int* mov,  int* box, int* choice);
+
+
 #endif // PLAYER_H_INCLUDED

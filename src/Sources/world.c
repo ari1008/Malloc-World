@@ -5,7 +5,7 @@
 **
 **  Description :
 */
-#define  MIN 5
+
 //  Includes library
 #include <stdlib.h>
 #include <time.h>
@@ -13,8 +13,6 @@
 #include "../headers/world.h"
 #include "../headers/main.h"
 
-#define  MIN 10
-#define  MAX 100
 /*
  ** To create the world
  */
@@ -26,6 +24,7 @@ World *generateWorld (int seed){
         worldAll->area[numberArea].widthArea=randomWorld();
         worldAll->area[numberArea].chunk = malloc(sizeof(int *) *worldAll->area[numberArea].heigthArea);
         generateArea(worldAll->area[numberArea], numberArea);
+
     }
     return worldAll;
 
@@ -49,11 +48,12 @@ void  generateArea(Area area, int numberArea){
 
     }
     travel(area, numberArea);
+
 }
 
 int randomMy(int min, int max){
     int nombre = 0;
-    nombre = rand() % (max + min);
+    nombre = (rand() % (max - min + 1)) + min;
     return nombre;
 }
 
@@ -66,7 +66,6 @@ void  displayArea(Area area){
         }
         printf("\n");
     }
-    printf("\n");
 }
 
 void travel(Area area, int numberArea){
@@ -85,13 +84,14 @@ void travel(Area area, int numberArea){
     }
 }
 
+
 void checkCase(Area area, int type){
     int count=0;
-    int x=0;
-    int y=0;
+    int x;
+    int y;
     do {
-        y=randomMy(0,area.heigthArea-1);
-        x=randomMy(0,area.widthArea-1);
+        y=randomMy(1,area.heigthArea-1);
+        x=randomMy(1,area.widthArea-1);
         if(area.chunk[y][x]==0){
             area.chunk[y][x]=type;
             count++;

@@ -61,32 +61,11 @@ void play(World* world, Player* player){
 
 void move(World *world, Player* player){
     int stop = 0;
+    int choice[2];
     displayArea(world->area[player->area]);
-    do {
-        int *verif = verification(world->area[player->area], player->y, player->x);
-        int compass = displayPosition(verif);
-        world->area[player->area].chunk[player->y][player->x] = 0;
-        switch (compass) {
-            case 0:
-                high(world->area[player->area], player);
-                displayArea(world->area[player->area]);
-                break;
-            case 1:
-                right(world->area[player->area], player);
-                displayArea(world->area[player->area]);
-                break;
-            case 2:
-                bottom(world->area[player->area], player);
-                displayArea(world->area[player->area]);
-                break;
-            case 3:
-                left(world->area[player->area], player);
-                displayArea(world->area[player->area]);
-                break;
-        }
-        printf("Si vous voulez arrêter tapez 1\n");
-        scanf("%d",&stop);
-    }while(stop !=1);
+    int *verif = verification(world->area[player->area], player->y, player->x);
+    displayPosition(verif, player->area, choice);
+    printf("%d %d", choice[0], choice[1]);
 }
 
 void left(Area area,Player *player ){
@@ -138,93 +117,174 @@ int* verification(Area area, int y, int x){
 
 int moveHigh(Area area, int y,int x){
     if(y==area.heigthArea-1){
-        if(area.chunk[0][x]==0){
-            return 1;
-        }else{
-            return 0;
-        }
+        return area.chunk[0][x];
     }else{
-        if(area.chunk[y+1][x]==0){
-            return 1;
-        }else{
-            return 0;
-        }
+        return area.chunk[y+1][x];
     }
 }
 
 int moveLow(Area area, int y,int x){
     if(0==y){
-        if(area.chunk[area.heigthArea-1][x]==0){
-            return 1;
-        }else{
-            return 0;
-        }
+        return area.chunk[area.heigthArea-1][x];
     }else{
-        if(area.chunk[y-1][x]==0){
-            return 1;
-        }else{
-            return 0;
-        }
+        return area.chunk[y-1][x];
     }
 }
 
 int moveRight(Area area, int y, int x){
     if(x==area.widthArea-1){
-        if(area.chunk[y][0]==0){
-            return 1;
-        }else{
-            return 0;
-        }
+        return area.chunk[y][0];
     }else{
-        if(area.chunk[y][x+1]==0){
-            return 1;
-        }else{
-            return 0;
-        }
+        return area.chunk[y][x+1];
     }
 }
 
 int moveLeft(Area area, int y, int x){
     if(x==0){
-        if(area.chunk[y][area.widthArea-1]==0){
-            return 1;
-        }else{
-            return 0;
-        }
+        return area.chunk[y][area.widthArea-1];
     }else{
-        if(area.chunk[y][x-1]==0){
-            return 1;
-        }else{
-            return 0;
-        }
+       return area.chunk[y][x-1];
     }
 }
 
-int displayPosition(int* position){
+int* displayPosition(int* position, int area, int* choice){
     char compass[4][6]={"High\0","Right\0","Low\0","Left\0"};
     int count=0;
     int mov[4]={0,0,0,0};
-    int number;
+    int box[4]={0,0,0,0};
+
     for(int i=0; i<4 ; i++){
-        if(position[i]==1){
+        if(position[i]==-2 || position[i]==-3) {
+            displayTravel(position[i], area, (char *) compass[i], count);
+        }else if(position[i]==0){
             printf("\n%d: You can go %s",count, compass[i]);
+        }else if(position[i]==2){
+            displayPnj(area, (char *) compass, count);
+        }else if(position[i]<=11 && position[i]>=3){
+            displayResources(position[i],  (char *) compass[i], count);
+        }else if(position[i]<=12){
+            displayMonster(position[i], (char *) compass[i], count);
+        }
+        if(position[i]!=-1){
             mov[count]=i;
             count++;
+            box[count]=position[i];
         }
     }
+    return choseNumber(count, mov, box, choice);
+}
+
+void displayMonster(int monster, char* compass, int count){
+    if(monster==99){
+        printf("\n%d: Face you the final boss  to %s",count, compass);
+    } else{
+        printf("\n%d: Face you against a level %d monster to %s",count,monster, compass);
+    }
+}
+
+void displayPnj(int area, char* compass, int count){
+    switch (area) {
+        case 1:
+            printf("\n%d: You can go Joe level 1 to %s",count, compass);
+            break;
+        case 2:
+            printf("\n%d: You can go Ben level 2 to %s",count, compass);
+            break;
+        case 3:
+            printf("\n%d: You can go Leo level 3 to %s",count, compass);
+            break;
+    }
+}
+
+void displayResources(int position, char* compass, int count){
+    if(position%3==0){
+        displayPlant(position,  compass, count);
+    }else if(position==5 || position==8 || position==11){
+        displayWood(position, compass, count);
+    }else if(position==4 || position==7 || position==10){
+        displayMineral(position, compass, count);
+    }
+}
+
+void displayMineral(int mineral, char* compass, int count){
+    switch (mineral) {
+        case 5:
+            printf("\n%d: You can mine Rock to %s",count, compass );
+            break;
+        case 8:
+            printf("\n%d: You can mine Iron to %s",count, compass );
+            break;
+        case 11:
+            printf("\n%d: You can mine Diamond to %s",count, compass );
+            break;
+    }
+}
+
+void displayWood(int wood, char* compass, int count){
+    switch (wood) {
+        case 5:
+            printf("\n%d: You can  cut Fir to %s",count, compass );
+            break;
+        case 8:
+            printf("\n%d: You can  cut Beech to %s",count, compass );
+            break;
+        case 11:
+            printf("\n%d: You can cut Oak to %s",count, compass );
+            break;
+    }
+}
+
+void displayPlant(int plant, char* compass, int count){
+    switch (plant) {
+        case 3:
+            printf("\n%d: You can collect Grass to %s",count, compass );
+            break;
+        case 6:
+            printf("\n%d: You can collect Lavender to %s",count, compass );
+            break;
+        case 9:
+            printf("\n%d: You can collect Hemp to %s",count, compass );
+            break;
+    }
+
+}
+
+void displayTravel(int position, int area, char* compass, int count){
+    if(area==1){
+        printf("\n%d: You can teleport level %d to %s",count, area+1, compass );
+    } else if(area==2){
+        if( position==(-3) ){
+            printf("\n%d: You can teleport level %d to %s",count, area+1, compass );
+        }else{
+            printf("\n%d: You can teleport level %d to %s",count, area-1, compass);
+        }
+    } else if(area==3){
+        printf("\n%d: You can teleport level %d to %s",count, area-1, compass);
+    }
+
+}
+
+int* choseNumber(int count,int* mov,  int* box, int* choice){
+    int number;
+    char compass[4][6]={"High\0","Right\0","Low\0","Left\0"};
     printf("\nChoose your number ?\n");
     do {
         scanf("%d",&number);
         if(number >=0 && number <count){
             if(strcmp(compass[mov[number]],compass[0])==0){
-                return 0;
+                choice[0]=0;
+                choice[1]=box[0];
             }else if(strcmp(compass[mov[number]],compass[1])==0){
-                return 1;
+                choice[0]=1;
+                choice[1]=box[1];
             }else if(strcmp(compass[mov[number]],compass[2])==0){
-                return 2;
+                choice[0]=2;
+                choice[1]=box[2];
             }else if(strcmp(compass[mov[number]],compass[3])==0){
-                return 3;
+                choice[0]=3;
+                choice[1]=box[3];
             }
+            return choice;
         }
         printf("Your choice does not exist\n");
     } while (1);

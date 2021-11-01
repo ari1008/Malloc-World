@@ -14,8 +14,8 @@
 #include "../headers/main.h"
 #include "../headers/player.h"
 
-#define  MIN 10
-#define  MAX 100
+#define  MIN 5
+#define  MAX 10
 
 #define SIZE 1
 
@@ -44,7 +44,7 @@ int main(void) {
 int randomWorld(){
     int nombre = 0;
     // Initialisation de la donnée seed
-    nombre = rand() % (15 + 5);
+    nombre = (rand() % (MAX - MIN + 1)) + MIN;
     return nombre;
 
 }
