@@ -58,8 +58,10 @@ void generateArea(Area area, int numberArea);
 
 void  displayArea(Area area);
 
-void  travel(Area area, int numberArea );
-void  monster(Area area);
+void  createTravel(Area area, int numberArea );
+void  createMonster(Area area);
+void  createPnj(Area area);
+void  createRessource(Area area, int numberArea);
 void checkCase(Area area, int type);
 #endif // WORLD_H_INCLUDED
 

@@ -8,7 +8,6 @@
 
 //  Includes library
 #include <stdlib.h>
-#include <time.h>
 #include <stdio.h>
 #include "../headers/world.h"
 #include "../headers/main.h"
@@ -18,7 +17,7 @@
  */
 World *generateWorld (int seed){
     World *worldAll= malloc(sizeof(World));
-    worldAll->seed=1;
+    worldAll->seed=seed;
     for (int numberArea = 0; numberArea < 3; numberArea++){
         worldAll->area[numberArea].heigthArea=randomWorld();
         worldAll->area[numberArea].widthArea=randomWorld();
@@ -47,8 +46,8 @@ void  generateArea(Area area, int numberArea){
         }
 
     }
-    travel(area, numberArea);
-
+    createTravel(area, numberArea);
+    createPnj(area);
 }
 
 int randomMy(int min, int max){
@@ -68,7 +67,7 @@ void  displayArea(Area area){
     }
 }
 
-void travel(Area area, int numberArea){
+void createTravel(Area area, int numberArea){
     switch (numberArea) {
         case 0:
             checkCase(area, -2);
@@ -97,4 +96,8 @@ void checkCase(Area area, int type){
             count++;
         }
     }while(count==0);
+}
+
+void createPnj(Area area){
+    checkCase(area, 2);
 }
