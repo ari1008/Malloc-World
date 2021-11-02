@@ -58,11 +58,17 @@ void generateArea(Area area, int numberArea);
 
 void  displayArea(Area area);
 
+void createAll(Area area, int numberArea);
 void  createTravel(Area area, int numberArea );
-void  createMonster(Area area);
+void  createMonster(Area area,  int numberArea);
 void  createPnj(Area area);
 void  createRessource(Area area, int numberArea);
+void  createPlant(Area area, int numberArea);
+void  createWood(Area area, int numberArea);
+void  createMineral(Area area, int numberArea);
+
 void checkCase(Area area, int type);
+
 #endif // WORLD_H_INCLUDED
 
 

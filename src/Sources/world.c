@@ -46,10 +46,15 @@ void  generateArea(Area area, int numberArea){
         }
 
     }
-    createTravel(area, numberArea);
-    createPnj(area);
+    createAll(area, numberArea);
 }
 
+void createAll(Area area, int numberArea){
+    createTravel(area, numberArea);
+    createMonster(area, numberArea);
+    createPnj(area);
+    createRessource(area, numberArea);
+}
 int randomMy(int min, int max){
     int nombre = 0;
     nombre = (rand() % (max - min + 1)) + min;
@@ -100,4 +105,81 @@ void checkCase(Area area, int type){
 
 void createPnj(Area area){
     checkCase(area, 2);
+}
+
+void createMonster(Area area, int numberArea){
+    switch (numberArea) {
+        case 0:
+            checkCase(area, randomMy(1, 20));
+            checkCase(area, randomMy(1,20));
+            checkCase(area, randomMy(1,20));
+            break;
+        case 1:
+            checkCase(area, randomMy(20, 50));
+            checkCase(area, randomMy(20,50));
+            checkCase(area, randomMy(20,50));
+            break;
+        case  2:
+            checkCase(area, randomMy(50, 98));
+            checkCase(area, randomMy(50,98));
+            checkCase(area, randomMy(50,98));
+            checkCase(area, 99);
+            break;
+
+    }
+}
+
+
+void createRessource(Area area, int numberArea){
+    createPlant(area, numberArea);
+    createWood(area, numberArea);
+    createMineral(area, numberArea);
+}
+
+void createPlant(Area area, int numberArea){
+    if(numberArea==0){
+        checkCase(area, 3);
+        checkCase(area, 3);
+        checkCase(area, 3);
+    } else if(numberArea==1){
+        checkCase(area, 6);
+        checkCase(area, 6);
+        checkCase(area, 6);
+    } else{
+        checkCase(area, 9);
+        checkCase(area, 9);
+        checkCase(area, 9);
+    }
+}
+
+void createWood(Area area, int numberArea){
+    if(numberArea==0){
+        checkCase(area, 5);
+        checkCase(area, 5);
+        checkCase(area, 5);
+    } else if(numberArea==1){
+        checkCase(area, 8);
+        checkCase(area, 8);
+        checkCase(area, 8);
+    }else{
+        checkCase(area, 11);
+        checkCase(area, 11);
+        checkCase(area, 11);
+    }
+}
+
+void createMineral(Area area, int numberArea){
+    if(numberArea==0){
+        checkCase(area, 4);
+        checkCase(area, 4);
+        checkCase(area, 4);
+    } else if(numberArea==1){
+        checkCase(area, 7);
+        checkCase(area, 7);
+        checkCase(area, 7);
+    } else{
+        checkCase(area, 10);
+        checkCase(area, 10);
+        checkCase(area, 10);
+    }
 }
