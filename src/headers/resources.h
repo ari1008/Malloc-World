@@ -1,4 +1,4 @@
-#ifndef RESOURCES_H_INCLUDED
+//#ifndef RESOURCES_H_INCLUDED
 #define RESOURCES_H_INCLUDED
 
 /*
@@ -12,16 +12,19 @@
 //  Include library
 #include <string.h>
 #include "world.h"
-#include "items.h"
 
 //  Properties of resources
-typedef struct {
+/*typedef struct {
     const WorldObject_ID worldId;
     const ToolType toolType;
     const MiningLevel miningLevel;
     const Item resourcesDrop;
     short respawnTime;
     Position position;
-} Resources;
+} Resources;*/
 
-#endif // RESOURCES_H_INCLUDED
+
+
+
+
+//#endif // RESOURCES_H_INCLUDED

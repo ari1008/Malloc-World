@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include "../headers/world.h"
 #include "../headers/main.h"
-
+//ajouter dans la fonction
 /*
  ** To create the world
  */
@@ -22,8 +22,11 @@ World *generateWorld (int seed){
         worldAll->area[numberArea].heigthArea=randomWorld();
         worldAll->area[numberArea].widthArea=randomWorld();
         worldAll->area[numberArea].chunk = malloc(sizeof(int *) *worldAll->area[numberArea].heigthArea);
-        generateArea(worldAll->area[numberArea], numberArea);
-
+        Resources* resources= malloc(sizeof(Resources));
+        Monster* monster= malloc(sizeof(Monster));
+        generateArea(worldAll->area[numberArea], resources,monster, numberArea);
+        worldAll->area[numberArea].monster =monster;
+        worldAll->area[numberArea].resources = resources;
     }
     return worldAll;
 
@@ -32,7 +35,7 @@ World *generateWorld (int seed){
  * * size of short 0 à 65 535
  * * but the max size is 100
  */
-void  generateArea(Area area, int numberArea){
+void  generateArea(Area area,Resources*  resources, Monster* monster, int numberArea){
     for (int i = 0; i < area.heigthArea; i++) {
         area.chunk[i] = malloc(sizeof(int) * area.widthArea);
     }
@@ -46,17 +49,24 @@ void  generateArea(Area area, int numberArea){
         }
 
     }
-    createAll(area, numberArea);
+    TabMonsterResources *tabMonsterResources;
+    tabMonsterResources = malloc(sizeof(TabMonsterResources));
+    createAll( area, resources, monster, tabMonsterResources, numberArea);
+    area.monster=tabMonsterResources->monster;
+    area.resources=tabMonsterResources->resources;
+
 }
 
-void createAll(Area area, int numberArea){
+void createAll(Area area,Resources* resources,Monster* monster,TabMonsterResources* tabMonsterResources, int numberArea){
     createTravel(area, numberArea);
-    createMonster(area, numberArea);
+    monster=createMonster(area,monster, numberArea);
     createPnj(area);
-    createRessource(area, numberArea);
+    resources = createRessource(area, resources, numberArea);
+    tabMonsterResources->resources=resources;
+    tabMonsterResources->monster=monster;
 }
 int randomMy(int min, int max){
-    int nombre = 0;
+    int nombre;
     nombre = (rand() % (max - min + 1)) + min;
     return nombre;
 }
@@ -73,113 +83,166 @@ void  displayArea(Area area){
 }
 
 void createTravel(Area area, int numberArea){
+    int xYTravel[2];
     switch (numberArea) {
         case 0:
-            checkCase(area, -2);
+            checkCase(area, -2,xYTravel);
             break;
         case  1:
-            checkCase(area, -2);
-            checkCase(area, -3);
-            break;
         case  2:
-            checkCase(area, -2);
-            checkCase(area, -3);
+            checkCase(area, -2,xYTravel);
+            checkCase(area, -3,xYTravel);
             break;
     }
 }
 
 
-void checkCase(Area area, int type){
+int* checkCase(Area area, int type, int* result){
     int count=0;
-    int x;
-    int y;
     do {
-        y=randomMy(1,area.heigthArea-1);
-        x=randomMy(1,area.widthArea-1);
-        if(area.chunk[y][x]==0){
-            area.chunk[y][x]=type;
+        result[0]=randomMy(1,area.heigthArea-1);
+        result[1]=randomMy(1,area.widthArea-1);
+        if(area.chunk[result[0]][result[1]]==0){
+            area.chunk[result[0]][result[1]]=type;
             count++;
         }
     }while(count==0);
+
+    return  result;
 }
 
 void createPnj(Area area){
-    checkCase(area, 2);
+    int xY[2];
+    checkCase(area, 2,xY );
 }
 
-void createMonster(Area area, int numberArea){
+Monster* createMonster(Area area,Monster* monster, int numberArea){
+    int xYMonster[2];
     switch (numberArea) {
         case 0:
-            checkCase(area, randomMy(1, 20));
-            checkCase(area, randomMy(1,20));
-            checkCase(area, randomMy(1,20));
+            checkCase(area, randomMy(1, 20),xYMonster);
+            monster= newElementMonster(1,xYMonster[0],xYMonster[1]);
+            for (int i = 0; i < 2; ++i) {
+                checkCase(area, randomMy(1, 20),xYMonster);
+                monster->point= (struct Monster *) newElementMonster(1, xYMonster[0], xYMonster[1]);
+            }
+
             break;
         case 1:
-            checkCase(area, randomMy(20, 50));
-            checkCase(area, randomMy(20,50));
-            checkCase(area, randomMy(20,50));
+            checkCase(area, randomMy(20, 50),xYMonster);
+            monster= newElementMonster(1,xYMonster[0],xYMonster[1]);
+            for (int i = 0; i < 2; ++i) {
+                checkCase(area, randomMy(20, 50),xYMonster);
+                monster->point= (struct Monster *) newElementMonster(1, xYMonster[0], xYMonster[1]);
+            }
             break;
         case  2:
-            checkCase(area, randomMy(50, 98));
-            checkCase(area, randomMy(50,98));
-            checkCase(area, randomMy(50,98));
-            checkCase(area, 99);
+            checkCase(area, randomMy(50, 98),xYMonster);
+            monster=newElementMonster(1,xYMonster[0],xYMonster[1]);
+            for (int i = 0; i < 2; ++i) {
+                checkCase(area, randomMy(50, 98),xYMonster);
+                monster->point= (struct Monster *) newElementMonster(1, xYMonster[0], xYMonster[1]);
+            }
+            checkCase(area, 99, xYMonster);
+            monster->point=(struct Monster *) newElementMonster(1, xYMonster[0], xYMonster[1]);
             break;
 
     }
 }
 
 
-void createRessource(Area area, int numberArea){
-    createPlant(area, numberArea);
-    createWood(area, numberArea);
-    createMineral(area, numberArea);
+Resources* createRessource(Area area, Resources* resources, int numberArea){
+    resources=createPlant(area,resources, numberArea);
+    createWood(area,resources, numberArea);
+    createMineral(area,resources, numberArea);
+    return resources;
 }
 
-void createPlant(Area area, int numberArea){
+Resources* createPlant(Area area,Resources* resources, int numberArea){
+    int xYPlant[2];
     if(numberArea==0){
-        checkCase(area, 3);
-        checkCase(area, 3);
-        checkCase(area, 3);
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 3,xYPlant);
+            if (i == 0) {
+                resources = newElementResources(3, xYPlant[0], xYPlant[1]);
+
+            } else {
+                resources->resources = newElementResources(3, xYPlant[0], xYPlant[1]);
+            }
+        }
+        return resources;
     } else if(numberArea==1){
-        checkCase(area, 6);
-        checkCase(area, 6);
-        checkCase(area, 6);
+        for (int i = 0; i < 3; ++i) {
+
+            checkCase(area, 6, xYPlant);
+            if(i==0){
+                resources= newElementResources(6,xYPlant[0], xYPlant[1]);
+            } else{
+                resources->resources= newElementResources(6,xYPlant[0], xYPlant[1]);
+            }
+        }
     } else{
-        checkCase(area, 9);
-        checkCase(area, 9);
-        checkCase(area, 9);
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 9, xYPlant);
+            if(i==0){
+                resources= newElementResources(9,xYPlant[0], xYPlant[1]);
+            } else{
+                resources->resources= newElementResources(9,xYPlant[0], xYPlant[1]);
+            }
+        }
     }
+
 }
 
-void createWood(Area area, int numberArea){
+void createWood(Area area,Resources* resources, int numberArea){
+    int xYWood[2];
     if(numberArea==0){
-        checkCase(area, 5);
-        checkCase(area, 5);
-        checkCase(area, 5);
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 5, xYWood);
+            resources->resources= newElementResources(5,xYWood[0], xYWood[1]);
+
+        }
     } else if(numberArea==1){
-        checkCase(area, 8);
-        checkCase(area, 8);
-        checkCase(area, 8);
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 8, xYWood);
+            resources->resources= newElementResources(8,xYWood[0], xYWood[1]);
+        }
     }else{
-        checkCase(area, 11);
-        checkCase(area, 11);
-        checkCase(area, 11);
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 11, xYWood);
+            resources->resources= newElementResources(11,xYWood[0], xYWood[1]);
+        }
     }
 }
 
-void createMineral(Area area, int numberArea){
+void createMineral(Area area,Resources* resources, int numberArea){
+    int xYMineral[2];
     if(numberArea==0){
-        checkCase(area, 4);
-        checkCase(area, 4);
-        checkCase(area, 4);
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 4, xYMineral);
+            resources->resources= newElementResources(11,xYMineral[0], xYMineral[1]);
+        }
     } else if(numberArea==1){
-        checkCase(area, 7);
-        checkCase(area, 7);
-        checkCase(area, 7);
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 7, xYMineral);
+            resources->resources= newElementResources(7,xYMineral[0], xYMineral[1]);
+        }
     } else{
-        checkCase(area, 10);
-        checkCase(area, 10);
-        checkCase(area, 10);
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 10, xYMineral);
+            resources->resources= newElementResources(10,xYMineral[0], xYMineral[1]);
+        }
     }
+}
+
+
+Monster* newElementMonster(int type, int y, int x){
+    Monster* monster= malloc(sizeof(Monster));
+    monster->hpMax=type;
+    monster->hpCurrent=type;
+    monster->respawnTime=15;
+    monster->view=1;
+    monster->x=x;
+    monster->point=NULL;
+    return monster;
 }

@@ -14,15 +14,7 @@
 #include "world.h"
 
 // Properties of a monster
-typedef struct  {
-    const WorldObject_ID worldId;
-    const char name[20];
-    short hpCurrent;
-    short hpMax;
-    const int xpDrop;
-    short respawnTime;
-    Position position;
-} Monster;
+
 
 
 

@@ -8,6 +8,7 @@
 
 //  Includes library
 #include "../headers/monster.h"
+#include "../headers/world.h"
 #include <stdlib.h>
 // Monster default properties
 // SKELETON

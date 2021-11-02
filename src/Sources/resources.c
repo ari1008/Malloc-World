@@ -9,10 +9,10 @@
 //  Includes library
 #include <stdlib.h>
 #include "../headers/resources.h"
-
+#include "../headers/world.h"
 //  WOOD
 //  Level I
-Resources woodI = {
+/*Resources woodI = {
     .worldId = WOOD_I,
     .toolType = AXE,
     .miningLevel = MINING_WOOD,
@@ -102,3 +102,19 @@ Resources plantIII = {
     .resourcesDrop.quantity = 1,
     .respawnTime = 0
 };
+*/
+
+void newResources(Area area){
+    area.resources= malloc(sizeof(Resources));
+}
+
+ Resources* newElementResources( int type, int y, int x){
+    struct Resources* resource= malloc(sizeof(Resources));
+    resource->id=type;
+    resource->positionX=x;
+    resource->positionY=y;
+    resource->respawn=10;
+    resource->view=1;
+    resource->resources=NULL;
+    return resource;
+}
