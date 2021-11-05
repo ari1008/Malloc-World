@@ -10,6 +10,7 @@
 */
 
 //  Include
+#include "allstructure.h"
 #include "items.h"
 
 typedef enum {

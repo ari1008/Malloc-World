@@ -10,6 +10,7 @@
 */
 
 //  Include library
+#include "allstructure.h"
 #include "items.h"
 
 // Give a alias to the level of a recipe

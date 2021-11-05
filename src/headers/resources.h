@@ -11,6 +11,7 @@
 
 //  Include library
 #include <string.h>
+#include "allstructure.h"
 #include "world.h"
 
 //  Properties of resources
@@ -23,8 +24,12 @@
     Position position;
 } Resources;*/
 
-
-
+void  createPnj(Area area);
+Resources*  createRessource(Area area,Resources* resources, int numberArea);
+Resources*  createPlant(Area area,Resources* resources, int numberArea);
+void  createWood(Area area,Resources* resources, int numberArea);
+void  createMineral(Area area,Resources* resources, int numberArea);
+Resources* newElementResources( int type, int y, int x);
 
 
 //#endif // RESOURCES_H_INCLUDED

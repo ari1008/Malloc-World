@@ -60,7 +60,6 @@ void play(World* world, Player* player){
 }
 
 void move(World *world, Player* player){
-    int stop = 0;
     int choice[2];
     displayArea(world->area[player->area]);
     int *verif = verification(world->area[player->area], player->y, player->x);
@@ -208,13 +207,13 @@ void displayResources(int position, char* compass, int count){
 
 void displayMineral(int mineral, char* compass, int count){
     switch (mineral) {
-        case 5:
+        case 4:
             printf("\n%d: You can mine Rock to %s",count, compass );
             break;
-        case 8:
+        case 7:
             printf("\n%d: You can mine Iron to %s",count, compass );
             break;
-        case 11:
+        case 10:
             printf("\n%d: You can mine Diamond to %s",count, compass );
             break;
     }

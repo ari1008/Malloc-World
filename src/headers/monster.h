@@ -1,5 +1,4 @@
-#ifndef MONSTER_H_INCLUDED
-#define MONSTER_H_INCLUDED
+
 
 /*
 **  Filename : monster.h
@@ -11,11 +10,14 @@
 
 //  Include library
 #include <string.h>
+#include "allstructure.h"
 #include "world.h"
-
+Monster*  createMonster(Area area,Monster* monster, int numberArea);
+Monster*   newElementMonster(int type, int y, int x);
+void printMonster(Monster* monster);
 // Properties of a monster
 
 
 
 
-#endif // MONSTER_H_INCLUDED
+

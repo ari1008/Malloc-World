@@ -10,6 +10,7 @@
 */
 
 //  Include library
+#include "allstructure.h"
 #include <string.h>
 
 //  Give alias to items

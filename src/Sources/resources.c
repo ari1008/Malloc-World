@@ -104,9 +104,7 @@ Resources plantIII = {
 };
 */
 
-void newResources(Area area){
-    area.resources= malloc(sizeof(Resources));
-}
+
 
  Resources* newElementResources( int type, int y, int x){
     struct Resources* resource= malloc(sizeof(Resources));
@@ -117,4 +115,88 @@ void newResources(Area area){
     resource->view=1;
     resource->resources=NULL;
     return resource;
+}
+
+Resources* createRessource(Area area, Resources* resources, int numberArea){
+    resources=createPlant(area,resources, numberArea);
+    createWood(area,resources, numberArea);
+    createMineral(area,resources, numberArea);
+    return resources;
+}
+
+Resources* createPlant(Area area,Resources* resources, int numberArea){
+    int xYPlant[2];
+    if(numberArea==0){
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 3,xYPlant);
+            if (i == 0) {
+                resources = newElementResources(3, xYPlant[0], xYPlant[1]);
+
+            } else {
+                resources->resources = newElementResources(3, xYPlant[0], xYPlant[1]);
+            }
+        }
+        return resources;
+    } else if(numberArea==1){
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 6, xYPlant);
+            if(i==0){
+                resources= newElementResources(6,xYPlant[0], xYPlant[1]);
+            } else{
+                resources->resources= newElementResources(6,xYPlant[0], xYPlant[1]);
+            }
+        }
+    } else{
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 9, xYPlant);
+            if(i==0){
+                resources= newElementResources(9,xYPlant[0], xYPlant[1]);
+            } else{
+                resources->resources= newElementResources(9,xYPlant[0], xYPlant[1]);
+            }
+        }
+    }
+    return resources;
+}
+
+void createWood(Area area,Resources* resources, int numberArea){
+    int xYWood[2];
+    if(numberArea==0){
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 5, xYWood);
+            resources->resources= newElementResources(5,xYWood[0], xYWood[1]);
+
+        }
+    } else if(numberArea==1){
+        for (int i = 0; i < 3; ++i) {
+
+            checkCase(area, 8, xYWood);
+            resources->resources= newElementResources(8,xYWood[0], xYWood[1]);
+        }
+    }else{
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 11, xYWood);
+            resources->resources= newElementResources(11,xYWood[0], xYWood[1]);
+        }
+    }
+}
+
+void createMineral(Area area,Resources* resources, int numberArea){
+    int xYMineral[2];
+    if(numberArea==0){
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 4, xYMineral);
+            resources->resources= newElementResources(11,xYMineral[0], xYMineral[1]);
+        }
+    } else if(numberArea==1){
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 7, xYMineral);
+            resources->resources= newElementResources(7,xYMineral[0], xYMineral[1]);
+        }
+    } else{
+        for (int i = 0; i < 3; ++i) {
+            checkCase(area, 10, xYMineral);
+            resources->resources= newElementResources(10,xYMineral[0], xYMineral[1]);
+        }
+    }
 }

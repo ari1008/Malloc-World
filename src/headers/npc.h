@@ -11,6 +11,7 @@
 
 //  Include library
 #include <string.h>
+#include "allstructure.h"
 #include "items.h"
 #include "world.h"
 
