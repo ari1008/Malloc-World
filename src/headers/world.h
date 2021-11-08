@@ -17,9 +17,9 @@
 //  Generate a world from a seed
 int randomMy(int min, int max);
 World * generateWorld (int seed);
-void generateArea(Area area,Resources* resources,Monster* monster, int numberArea);
+void generateArea(Area area,TabAll* tabAll,Monster* monster, int numberArea);
 void  displayArea(Area area);
-void createAll(Area area,Resources* resources,Monster* monster,TabMonsterResources* tabMonsterResources, int numberArea);
+void createAll(Area area,Monster* monster,TabAll* tabAll, int numberArea);
 void  createTravel(Area area, int numberArea );
 int* checkCase(Area area, int type, int* result);
 

@@ -25,11 +25,11 @@
 } Resources;*/
 
 void  createPnj(Area area);
-Resources*  createRessource(Area area,Resources* resources, int numberArea);
+void createRessource(Area area, TabAll* tabAll , int numberArea);
 Resources*  createPlant(Area area,Resources* resources, int numberArea);
-void  createWood(Area area,Resources* resources, int numberArea);
-void  createMineral(Area area,Resources* resources, int numberArea);
+Resources*   createWood(Area area,Resources* resources, int numberArea);
+Resources*  createMineral(Area area,Resources* resources, int numberArea);
 Resources* newElementResources( int type, int y, int x);
-
+void printResource(Resources* resource);
 
 //#endif // RESOURCES_H_INCLUDED

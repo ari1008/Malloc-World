@@ -8,6 +8,7 @@
 
 //  Includes library
 #include <stdlib.h>
+#include <stdio.h>
 #include "../headers/resources.h"
 #include "../headers/world.h"
 //  WOOD
@@ -113,90 +114,145 @@ Resources plantIII = {
     resource->positionY=y;
     resource->respawn=10;
     resource->view=1;
-    resource->resources=NULL;
+    resource->next=NULL;
     return resource;
 }
 
-Resources* createRessource(Area area, Resources* resources, int numberArea){
-    resources=createPlant(area,resources, numberArea);
-    createWood(area,resources, numberArea);
-    createMineral(area,resources, numberArea);
-    return resources;
+void createRessource(Area area, TabAll* tabAll , int numberArea){
+    tabAll->plant=createPlant(area,tabAll->plant, numberArea);
+    tabAll->wood=createWood(area,tabAll->wood, numberArea);
+    tabAll->mineral=createMineral(area,tabAll->mineral, numberArea);
 }
 
 Resources* createPlant(Area area,Resources* resources, int numberArea){
     int xYPlant[2];
-    if(numberArea==0){
-        for (int i = 0; i < 3; ++i) {
-            checkCase(area, 3,xYPlant);
-            if (i == 0) {
-                resources = newElementResources(3, xYPlant[0], xYPlant[1]);
-
-            } else {
-                resources->resources = newElementResources(3, xYPlant[0], xYPlant[1]);
+    Resources* resources1;
+    int type;
+    switch (numberArea) {
+        case 0:
+            type=3;
+            checkCase(area,type,xYPlant);
+            resources= newElementResources(type, xYPlant[0], xYPlant[1]);
+            resources1=resources;
+            for (int i = 0; i < 2; ++i) {
+                checkCase(area, type,xYPlant);
+                resources1->next= (struct Resources *)  newElementResources(type, xYPlant[0],xYPlant[1]);
+                resources1= (Resources *) resources1->next;
             }
-        }
-        return resources;
-    } else if(numberArea==1){
-        for (int i = 0; i < 3; ++i) {
-            checkCase(area, 6, xYPlant);
-            if(i==0){
-                resources= newElementResources(6,xYPlant[0], xYPlant[1]);
-            } else{
-                resources->resources= newElementResources(6,xYPlant[0], xYPlant[1]);
+            break;
+        case 1:
+            type=6;
+            checkCase(area,type,xYPlant);
+            resources= newElementResources(type, xYPlant[0], xYPlant[1]);
+            resources1=resources;
+            for (int i = 0; i < 2; ++i) {
+                checkCase(area, type,xYPlant);
+                resources1->next= (struct Resources *)  newElementResources(type, xYPlant[0],xYPlant[1]);
+                resources1= (Resources *) resources1->next;
             }
-        }
-    } else{
-        for (int i = 0; i < 3; ++i) {
-            checkCase(area, 9, xYPlant);
-            if(i==0){
-                resources= newElementResources(9,xYPlant[0], xYPlant[1]);
-            } else{
-                resources->resources= newElementResources(9,xYPlant[0], xYPlant[1]);
+            break;
+        case 2:
+            type=9;
+            checkCase(area,type,xYPlant);
+            resources= newElementResources(type, xYPlant[0], xYPlant[1]);
+            resources1=resources;
+            for (int i = 0; i < 2; ++i) {
+                checkCase(area, type,xYPlant);
+                resources1->next= (struct Resources *)  newElementResources(type, xYPlant[0],xYPlant[1]);
+                resources1= (Resources *) resources1->next;
             }
-        }
+            break;
     }
     return resources;
 }
 
-void createWood(Area area,Resources* resources, int numberArea){
+Resources*  createWood(Area area,Resources* resources, int numberArea){
     int xYWood[2];
-    if(numberArea==0){
-        for (int i = 0; i < 3; ++i) {
-            checkCase(area, 5, xYWood);
-            resources->resources= newElementResources(5,xYWood[0], xYWood[1]);
-
-        }
-    } else if(numberArea==1){
-        for (int i = 0; i < 3; ++i) {
-
-            checkCase(area, 8, xYWood);
-            resources->resources= newElementResources(8,xYWood[0], xYWood[1]);
-        }
-    }else{
-        for (int i = 0; i < 3; ++i) {
-            checkCase(area, 11, xYWood);
-            resources->resources= newElementResources(11,xYWood[0], xYWood[1]);
-        }
+    Resources* resources1;
+    int type;
+    switch (numberArea) {
+        case 0:
+            type=5;
+            checkCase(area,type,xYWood);
+            resources= newElementResources(type, xYWood[0], xYWood[1]);
+            resources1=resources;
+            for (int i = 0; i < 2; ++i) {
+                checkCase(area, type,xYWood);
+                resources1->next= (struct Resources *)  newElementResources(type, xYWood[0],xYWood[1]);
+                resources1= (Resources *) resources1->next;
+            }
+            break;
+        case 1:
+            type=8;
+            checkCase(area,type,xYWood);
+            resources= newElementResources(type, xYWood[0], xYWood[1]);
+            resources1=resources;
+            for (int i = 0; i < 2; ++i) {
+                checkCase(area, type,xYWood);
+                resources1->next= (struct Resources *)  newElementResources(type, xYWood[0],xYWood[1]);
+                resources1= (Resources *) resources1->next;
+            }
+            break;
+        case 2:
+            type=11;
+            checkCase(area,type,xYWood);
+            resources= newElementResources(type, xYWood[0], xYWood[1]);
+            resources1=resources;
+            for (int i = 0; i < 2; ++i) {
+                checkCase(area, type,xYWood);
+                resources1->next= (struct Resources *)  newElementResources(type, xYWood[0],xYWood[1]);
+                resources1= (Resources *) resources1->next;
+            }
+            break;
     }
+    return resources;
 }
 
-void createMineral(Area area,Resources* resources, int numberArea){
+Resources* createMineral(Area area,Resources* resources, int numberArea){
     int xYMineral[2];
-    if(numberArea==0){
-        for (int i = 0; i < 3; ++i) {
-            checkCase(area, 4, xYMineral);
-            resources->resources= newElementResources(11,xYMineral[0], xYMineral[1]);
-        }
-    } else if(numberArea==1){
-        for (int i = 0; i < 3; ++i) {
-            checkCase(area, 7, xYMineral);
-            resources->resources= newElementResources(7,xYMineral[0], xYMineral[1]);
-        }
-    } else{
-        for (int i = 0; i < 3; ++i) {
-            checkCase(area, 10, xYMineral);
-            resources->resources= newElementResources(10,xYMineral[0], xYMineral[1]);
-        }
+    Resources* resources1;
+    int type;
+    switch (numberArea) {
+        case 0:
+            type = 4;
+            checkCase(area, type, xYMineral);
+            resources = newElementResources(type, xYMineral[0], xYMineral[1]);
+            resources1 = resources;
+            for (int i = 0; i < 2; ++i) {
+                checkCase(area, type, xYMineral);
+                resources1->next = (struct Resources *) newElementResources(type, xYMineral[0], xYMineral[1]);
+                resources1 = (Resources *) resources1->next;
+            }
+            break;
+        case 1:
+            type = 7;
+            checkCase(area, type, xYMineral);
+            resources = newElementResources(type, xYMineral[0], xYMineral[1]);
+            resources1 = resources;
+            for (int i = 0; i < 2; ++i) {
+                checkCase(area, type, xYMineral);
+                resources1->next = (struct Resources *) newElementResources(type, xYMineral[0], xYMineral[1]);
+                resources1 = (Resources *) resources1->next;
+            }
+            break;
+        case 2:
+            type = 10;
+            checkCase(area, type, xYMineral);
+            resources = newElementResources(type, xYMineral[0], xYMineral[1]);
+            resources1 = resources;
+            for (int i = 0; i < 2; ++i) {
+                checkCase(area, type, xYMineral);
+                resources1->next = (struct Resources *) newElementResources(type, xYMineral[0], xYMineral[1]);
+                resources1 = (Resources *) resources1->next;
+            }
+            break;
+    }
+    return resources;
+}
+
+void printResource(Resources* resource){
+    while (resource != NULL){
+        printf("%d\n",resource->id);
+        resource= (Resources *) resource->next;
     }
 }

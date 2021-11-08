@@ -29,6 +29,13 @@ typedef enum WorldObject_ID {
     FINAL_BOSS = 99
 } WorldObject_ID;
 
+//  Give a position to an object
+typedef struct  {
+    short x;
+    short y;
+} Position;
+
+
 typedef struct  {
     //const WorldObject_ID worldId;
     char name[50];
@@ -48,7 +55,7 @@ struct Resources {
     int positionY;
     short respawn;
     short view;
-    struct Resources* resources;
+    struct Resources* next;
 };
 typedef struct Resources Resources;
 //  Properties of the world's area
@@ -56,8 +63,12 @@ typedef struct {
     int** chunk;
     int heigthArea;
     int widthArea;
-    Resources* resources;
+    Resources* wood;
+    Resources* mineral;
+    Resources* plant;
     Monster* monster;
+    int three[2];
+    int two[2];
 } Area;
 
 //  Properties of the world
@@ -66,15 +77,11 @@ typedef struct  {
     Area area[3];
 } World;
 
-//  Give a position to an object
-typedef struct  {
-    short x;
-    short y;
-} Position;
-
 typedef struct {
     Monster* monster;
-    Resources* resources;
-}TabMonsterResources;
+    Resources* plant;
+    Resources* wood;
+    Resources* mineral;
+}TabAll;
 
 #endif //MALLOC_WORLD_ALLSTRUCTURE_H

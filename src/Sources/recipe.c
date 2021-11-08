@@ -12,7 +12,7 @@
 
 //  TOOL
 //  WOOD
-Recipe woodenPickaxeRecipe = {
+/*Recipe woodenPickaxeRecipe = {
     .product.itemId = WOODEN_PICKAXE,
     .product.quantity = 1,
     .needMaterial[0].itemId = SPRUCE,
@@ -275,4 +275,4 @@ Recipe potionIIIRecipe = {
     .needMaterial[1].itemId = NONE,
     .needMaterial[1].quantity = 0,
     .recipeLevel = RECIPE_HARD
-};
+};*/
