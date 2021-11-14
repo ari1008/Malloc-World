@@ -4,9 +4,13 @@
 
 #ifndef MALLOC_WORLD_ALLSTRUCTURE_H
 #define MALLOC_WORLD_ALLSTRUCTURE_H
+#include <bits/types/FILE.h>
 #define  PATH "/home/ari/Documents/C/Malloc-World/resources/"
 #define  MONSTER "item.txt"
 #define  RESOURCES "resources.txt"
+#define PNJ "pnj.txt"
+#define PNJ1 "pnj1.txt"
+#define PNJ2 "pnj2.txt"
 typedef enum WorldObject_ID {
     GATE_AREA_II_III = -3,
     GATE_AREA_I_II,
@@ -35,6 +39,35 @@ typedef struct  {
     short y;
 } Position;
 
+typedef struct  {
+    int id;
+    char name[50];
+    int type;
+    int hp;
+    int broke;
+    int save;
+    int damage;
+    int resistance;
+    int number;
+    int durability;
+    int resource[2];
+    int resource1[2];
+} Item;
+
+
+typedef struct {
+    //const WorldObject_ID worldId;
+    char *username;
+    short level;
+    int xpCurrent;
+    int xpNext;
+    short hpCurrent;
+    short hpMax;
+    int x;
+    int y;
+    Item inventory[10];
+    short area;
+} Player;
 
 typedef struct  {
     //const WorldObject_ID worldId;
@@ -67,8 +100,9 @@ typedef struct {
     Resources* mineral;
     Resources* plant;
     Monster* monster;
-    int three[2];
-    int two[2];
+    int* three;
+    int* two;
+    Item* pnj;
 } Area;
 
 //  Properties of the world
@@ -83,5 +117,6 @@ typedef struct {
     Resources* wood;
     Resources* mineral;
 }TabAll;
+
 
 #endif //MALLOC_WORLD_ALLSTRUCTURE_H

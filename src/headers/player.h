@@ -23,19 +23,7 @@ typedef struct  {
 } Inventory;
 
 //  Properties of a player
-typedef struct {
-    //const WorldObject_ID worldId;
-    char *username;
-    short level;
-    int xpCurrent;
-    int xpNext;
-    short hpCurrent;
-    short hpMax;
-    int x;
-    int y;
-    Inventory inventory;
-    short area;
-} Player;
+
 
 Player *createPlayer();
 void play(World* world, Player* player);

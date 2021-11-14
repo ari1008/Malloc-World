@@ -36,8 +36,8 @@ all:MALLOC-WORLD
 
 
 
-MALLOC-WORLD: item.o monster.o npc.o player.o recipe.o resources.o world.o main.o
-	$(LD) -o $(TARGET) src/objets/items.o src/objets/monster.o src/objets/npc.o src/objets/player.o  src/objets/recipe.o src/objets/ressources.o  src/objets/world.o src/objets/main.o
+MALLOC-WORLD: item.o monster.o npc.o player.o recipe.o item.o resources.o world.o main.o
+	$(LD) -o $(TARGET) src/objets/items.o src/objets/monster.o src/objets/npc.o src/objets/player.o  src/objets/recipe.o src/objets/ressources.o src/objets/items.o src/objets/world.o src/objets/main.o
 
 item.o: src/Sources/items.c
 	$(CC) -o src/objets/items.o  -c src/Sources/items.c  $(CCFLAGS)

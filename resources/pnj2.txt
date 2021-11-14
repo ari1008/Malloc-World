@@ -1,0 +1,5 @@
+30;Diamond sword;2;27;5;28;^;10;10;-10;
+31;Diamond spear;2;27;6;28;^;8;15;-10;
+32;Diamond hammer;2;27;8;28;^;5;20;-10;
+33;Diamond breastplate;16;28;^;40;-10;-10;
+34;Life Potion III;2;29;^;-10;-10;200;

@@ -25,6 +25,9 @@ World *generateWorld (int seed){
         worldAll->area[numberArea].chunk = malloc(sizeof(int *) *worldAll->area[numberArea].heigthArea);
         TabAll * tabAll= malloc(sizeof(TabAll));
         Monster* monster= malloc(sizeof(Monster));
+        worldAll->area[numberArea].two= malloc(sizeof(int)*2);
+        worldAll->area[numberArea].three= malloc(sizeof(int)*2);
+
         generateArea(worldAll->area[numberArea], (TabAll *) tabAll, monster, numberArea);
         worldAll->area[numberArea].plant = tabAll->plant;
         worldAll->area[numberArea].monster = tabAll->monster;
@@ -62,7 +65,6 @@ void createAll(Area area,Monster* monster,TabAll* tabAll, int numberArea){
     createPnj(area);
     createRessource(area, tabAll, numberArea);
     tabAll->monster=monster;
-
 }
 int randomMy(int min, int max){
     int nombre;
@@ -82,20 +84,14 @@ void  displayArea(Area area){
 }
 
 void createTravel(Area area, int numberArea){
-    int xYTravel[2];
     switch (numberArea) {
         case 0:
-            checkCase(area, -2,xYTravel);
-            area.two[0]=xYTravel[0];
-            area.two[1]=xYTravel[1];
+            checkCase(area, -2,area.two);
+            break;
         case  1:
         case  2:
-            checkCase(area, -2,xYTravel);
-            area.two[0]=xYTravel[0];
-            area.two[1]=xYTravel[1];
-            checkCase(area, -3,xYTravel);
-            area.three[0]=xYTravel[0];
-            area.three[1]=xYTravel[1];
+            checkCase(area, -2,area.two);
+            checkCase(area, -3,area.three);
 
     }
 }

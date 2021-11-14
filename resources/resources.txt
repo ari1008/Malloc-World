@@ -4,9 +4,9 @@
 0;Free space;
 1;Player;
 2;PNJ;
-3;Fir;
+3;Grass;
 4;Rock;
-5;Rock;
+5;Fir;
 6;Lavender;
 7;Iron;
 8;Beech;

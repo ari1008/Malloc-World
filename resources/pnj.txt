@@ -1,0 +1,10 @@
+1;Wooden sword;3;7;^;1;10;-10;
+2;Wooden pickaxe;3;7;^;10;-10;-10;
+3;Wooden billhook;3;7;^;10;-10;-10;
+4;Wooden ax;3;7;^;10;-10;-10;
+8;Stone sword;2;7;3;6;^;10;2;-10;
+9;Stone spear;3;7;4;6;^;3;8;-10;
+10;Stone hammer;2;7;6;6;^;5;4;-10;
+11;Stone breastplate;10;6;^;5;4;-10;
+14;Stone ax;2;5;3;6;^;10;-10;-10;
+15;Life Potion I;2;5;^;-10;-10;30;
