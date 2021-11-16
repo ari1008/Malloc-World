@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../headers/player.h"
+#include "../headers/main.h"
 
 
 //  Player default properties at the start of the game
@@ -25,7 +26,42 @@ Player*  createPlayer(){
     player->x=0;
     player->y=0;
     player->area=0;
+    int resource0[2]={3,7};
+    int resource1[2]={-10,-10};
+    player->inventory[0]=createItemStart(1, "Wooden sword", "Armed",resource0 , resource1,10, 1, -10);
+    resource0[0]=3;
+    resource0[1]=7;
+    resource1[0]=-10;
+    resource1[1]=-10;
+    player->inventory[1]=createItemStart(2, "Wooden pickaxe", "Tool",resource0 , resource1,10, -10, -10);
+    resource0[0]=3;
+    resource0[1]=7;
+    resource1[0]=-10;
+    resource1[1]=-10;
+    player->inventory[2]=createItemStart(3, "Wooden billhook", "Tool",resource0 , resource1,10, -10, -10);
+    resource0[0]=3;
+    resource0[1]=7;
+    resource1[0]=-10;
+    resource1[1]=-10;
+    player->inventory[3]=createItemStart(4, "Wooden ax", "Tool",resource0 , resource1,10, -10, -10);
+    player->numberInventory=3;
     return player;
+}
+
+Item createItemStart(int id, char* name, char* type, int* ressource0, int* ressource1, int durability, int damage, int hp){
+    Item inventory;
+    inventory.id=id;
+    strcpy(inventory.name, name);
+    strcpy(inventory.type, type);
+    inventory.resource[0]=ressource0[0];
+    inventory.resource[0]=ressource0[1];
+    inventory.resource[1]=ressource1[0];
+    inventory.resource[1]=ressource1[1];
+    inventory.broke=0;
+    inventory.durability=durability;
+    inventory.damage=damage;
+    inventory.hp=hp;
+    return inventory;
 }
 
 void play(World* world, Player* player){
@@ -34,10 +70,33 @@ void play(World* world, Player* player){
 
 void move(World *world, Player* player){
     int choice[2];
+    int sceneSucces;
     displayArea(world->area[player->area]);
     int *verif = verification(world->area[player->area], player->y, player->x);
     displayPosition(verif, player->area, choice);
-    printf("%d %d", choice[0], choice[1]);
+    printf("%d %d\n", choice[0], choice[1]);
+    sceneSucces=launchScene(world->area[player->area], player, choice[1]);
+
+}
+
+int launchScene(Area area, Player* player,int id){
+    char* phase=scenePlay(id);
+    if(strcmp(phase, "Travel")==0){
+        printf("Travel\n");
+    }else if(strcmp(phase, "Monster")==0){
+        printf("Pas encore fait\n");
+    }else if(strcmp(phase, "Nothing")==0){
+        printf("Nothing\n");
+    }else if(strcmp(phase, "Rock")==0 || strcmp(phase, "Plant")==0 || strcmp(phase, "Wood")){
+        printf("Rock\n");
+    }else if(strcmp(phase, "Sell")==0){
+        printf("Sell\n");
+    }
+    return 1;
+}
+char* scenePlay(int id){
+    char* scene= readLine(RESOURCES, id,3);
+    return scene;
 }
 
 void left(Area area,Player *player ){

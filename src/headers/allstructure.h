@@ -43,7 +43,7 @@ typedef struct  {
 typedef struct  {
     int id;
     char name[50];
-    int type;
+    char type[50];
     int hp;
     int broke;
     int save;
@@ -71,6 +71,7 @@ typedef struct {
     int x;
     int y;
     Item inventory[10];
+    int numberInventory;
     short area;
 } Player;
 

@@ -344,6 +344,9 @@ Item *createItem(char *line) {
             case 10:
                 item->hp=atoi(strToken);
                 break;
+            case 11:
+                strcpy(item->type, strToken);
+                break;
         }
         strToken = strtok ( NULL, separators );
     }

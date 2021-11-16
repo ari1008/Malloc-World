@@ -38,8 +38,6 @@ int main(void) {
     World *world= generateWorld(1);
     Player *player = createPlayer();
     play(world, player);
-    /*char* filename="resources.txt\0";
-    printf("%d",readLigne(filename, 7, 1));*/
     return 0;
 }
 
@@ -70,6 +68,7 @@ char* readLine(char* filename, int type, int number){
                 return result;
             }
             count++;
+
         }
         fclose(file);
     }
