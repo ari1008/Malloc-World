@@ -8,9 +8,10 @@
 #define  PATH "/home/ari/Documents/C/Malloc-World/resources/"
 #define  MONSTER "item.txt"
 #define  RESOURCES "resources.txt"
-#define PNJ "pnj.txt"
-#define PNJ1 "pnj1.txt"
-#define PNJ2 "pnj2.txt"
+#define PNJ "pnj.txt\0"
+#define PNJ1 "pnj1.txt\0"
+#define PNJ2 "pnj2.txt\0"
+
 typedef enum WorldObject_ID {
     GATE_AREA_II_III = -3,
     GATE_AREA_I_II,
@@ -52,11 +53,15 @@ typedef struct  {
     int durability;
     int resource[2];
     int resource1[2];
+    struct Item* next;
 } Item;
 
+typedef struct  {
+    Item* item;
+    Item* item1;
+} ItemTwo;
 
 typedef struct {
-    //const WorldObject_ID worldId;
     char *username;
     short level;
     int xpCurrent;
@@ -70,7 +75,6 @@ typedef struct {
 } Player;
 
 typedef struct  {
-    //const WorldObject_ID worldId;
     char name[50];
     int hpCurrent;
     int hpMax;
@@ -103,6 +107,7 @@ typedef struct {
     int* three;
     int* two;
     Item* pnj;
+    Item* storage;
 } Area;
 
 //  Properties of the world

@@ -257,75 +257,104 @@ void printResource(Resources* resource){
     }
 }
 
-void insertCraft(Item* pnj, FILE* filePnj){
-    char line[256];
-    if (filePnj != NULL) {
-        while (fgets(line, sizeof(line), filePnj) != NULL) {
-            pnj=createItem(line);
-        }
-        fclose(filePnj);
-    }
-}
-void createCraft(Item* notPlayer, int area){
+Item* createCraft(Item* notPlayer, int area){
     Item* create=notPlayer;
-    if(area>=0){
+    ItemTwo*  liste;
+    if(area==0){
         char* path=malloc(sizeof(char)*62);
         strcpy(path,PATH );
         strcat(path, PNJ);
-        FILE* readPnj= fopen(path, 'r');
-        insertCraft(create, readPnj);
-    }else if(area>=1){
+        FILE* readPnj= fopen(path, "r");
+        liste=insertCraft(create, readPnj);
+        fclose(readPnj);
+    }else if(area==1){
+        char* path1=malloc(sizeof(char)*62);
+        strcpy(path1,PATH );
+        strcat(path1, PNJ1);
+        FILE* readPnj1= fopen(path1, "r");
+        liste=insertCraft(create, readPnj1);
+        fclose(readPnj1);
+    }else if(area==2){
         char* path=malloc(sizeof(char)*62);
         strcpy(path,PATH );
-        strcat(path, PNJ1);
-        FILE* readPnj1= fopen(path, 'r');
-        insertCraft(create, readPnj1);
-    }else if(area>=2){
-        char* path=malloc(sizeof(char)*62);
-        strcpy(path,PATH );
-        strcat(path, PNJ1);
-        FILE* readPnj2= fopen(path, 'r');
-        insertCraft(create, readPnj2);
+        strcat(path, PNJ2);
+        FILE* readPnj2= fopen(path, "r");
+        liste=insertCraft(create, readPnj2);
+        fclose(readPnj2);
     }
+    return liste->item;
 }
 
+ItemTwo* insertCraft(Item* pnj, FILE* filePnj){
+     ItemTwo* iteamAll= malloc(sizeof(Item));
+    char line[256];
+    int count=0;
+    Item* test;
+    if (filePnj != NULL) {
+        while (fgets(line, sizeof(line), filePnj) != NULL) {
+            if(count==0){
+                pnj=createItem(line);
+                test=pnj;
+                count++;
+            }else{
+                test->next= (struct Item *) createItem(line);
+                test= (Item *) test->next;
 
+            }
+        }
+    }
+    iteamAll->item=pnj;
+    iteamAll->item1=test;
+    return iteamAll;
+}
 
 Item *createItem(char *line) {
     Item* item= malloc(sizeof(Item));
     char* separators=";";
     int count=0;
     char * strToken = strtok ( line, separators );
-    item->id=atoi(strToken);
     while ( strToken != NULL ) {
         count++;
         switch(count){
             case 1:
-                strcpy(item->name, strToken);
+                item->id=atoi(strToken);
                 break;
             case 2:
-                item->resource[0]=atoi(strToken);
+                strcpy(item->name, strToken);
                 break;
             case 3:
-                item->resource[1]=atoi(strToken);
+                item->resource[0]=atoi(strToken);
                 break;
             case 4:
-                item->resource1[0]=atoi(strToken);
+                item->resource[1]=atoi(strToken);
+
                 break;
             case 5:
+                item->resource1[0]=atoi(strToken);
+                break;
+            case 6:
                 item->resource1[1]=atoi(strToken);
                 break;
-            case 7:
+            case 8:
                 item->durability=atoi(strToken);
                 break;
-            case 8:
+            case 9:
                 item->damage=atoi(strToken);
                 break;
-            case 9:
+            case 10:
                 item->hp=atoi(strToken);
                 break;
         }
         strToken = strtok ( NULL, separators );
     }
     return item;
+}
+
+void printCraft(Item* item){
+     int count=0;
+    while (item!= NULL){
+        printf("%s %d\n",item->name,count);
+        count++;
+        item= (Item *) item->next;
+    }
 }

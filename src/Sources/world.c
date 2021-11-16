@@ -25,9 +25,11 @@ World *generateWorld (int seed){
         worldAll->area[numberArea].chunk = malloc(sizeof(int *) *worldAll->area[numberArea].heigthArea);
         TabAll * tabAll= malloc(sizeof(TabAll));
         Monster* monster= malloc(sizeof(Monster));
+        Item* item= malloc(sizeof(Item));
         worldAll->area[numberArea].two= malloc(sizeof(int)*2);
         worldAll->area[numberArea].three= malloc(sizeof(int)*2);
-
+        worldAll->area[numberArea].pnj= malloc(sizeof(Item));
+        worldAll->area[numberArea].pnj=createCraft(item, numberArea);
         generateArea(worldAll->area[numberArea], (TabAll *) tabAll, monster, numberArea);
         worldAll->area[numberArea].plant = tabAll->plant;
         worldAll->area[numberArea].monster = tabAll->monster;

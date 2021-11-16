@@ -31,7 +31,10 @@ Resources*   createWood(Area area,Resources* resources, int numberArea);
 Resources*  createMineral(Area area,Resources* resources, int numberArea);
 Resources* newElementResources( int type, int y, int x);
 void printResource(Resources* resource);
+
 Item* createItem(char* line);
-void insertCraft(Item* pnj, FILE* filePnj);
-void createCraft(Item* notPlayer, int area);
+ItemTwo* insertCraft(Item* pnj, FILE* filePnj);
+Item* createCraft(Item* notPlayer, int area);
+void printCraft(Item* item);
+
 //#endif // RESOURCES_H_INCLUDED

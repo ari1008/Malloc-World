@@ -39,9 +39,7 @@ int main(void) {
     Player *player = createPlayer();
     play(world, player);
     /*char* filename="resources.txt\0";
-    printf("%s",readLigne(filename, 7, 1));*/
-    Item* item = malloc(sizeof(item));
-    createCraft(item, 0);
+    printf("%d",readLigne(filename, 7, 1));*/
     return 0;
 }
 

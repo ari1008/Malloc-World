@@ -42,7 +42,6 @@ Monster* createMonster(Area area,Monster* monster, int numberArea){
             type = randomMy(12, 20);
             checkCase(area,type,xYMonster);
             monster= newElementMonster(type,xYMonster[0],xYMonster[1]);
-
             monsterfirst=monster;
             for (int i = 0; i < 2; ++i) {
                 type = randomMy(12, 20);
@@ -50,7 +49,6 @@ Monster* createMonster(Area area,Monster* monster, int numberArea){
                 monsterfirst->next= (struct Monster *) newElementMonster(type, xYMonster[0], xYMonster[1]);
                 monsterfirst= (Monster *) monsterfirst->next;
             }
-
             break;
         case 1:
             type = randomMy(20, 50);
