@@ -71,12 +71,40 @@ void play(World* world, Player* player){
 void move(World *world, Player* player){
     int choice[2];
     int sceneSucces;
+    int stop = 0;
+    upgradeWorld(world, player);
     displayArea(world->area[player->area]);
-    int *verif = verification(world->area[player->area], player->y, player->x);
-    displayPosition(verif, player->area, choice);
-    printf("%d %d\n", choice[0], choice[1]);
-    sceneSucces=launchScene(world->area[player->area], player, choice[1]);
+    do{
+        int *verif = verification(world->area[player->area], player->y, player->x);
+        printf("choice %d %d\n", choice[0], choice[1]);
+        world->area[player->area].chunk[player->y][player->x] = 0;
+        displayPosition(verif, player->area, choice);
+        sceneSucces=launchScene(world->area[player->area], player, choice[1]);
+        nextCase(world->area[player->area],player, choice[0]);
+        upgradeWorld(world, player);
+        displayArea(world->area[player->area]);
+        printf("If you stop 6\n");
+        scanf("%d",&stop);
+    }while(stop !=6);
+    ;
+}
 
+int nextCase(Area area,Player *player, int move){
+    switch (move) {
+        case 0:
+            high(area,player);
+            break;
+        case 1:
+            right(area, player);
+            break;
+        case 2:
+            bottom(area, player);
+            break;
+        case 3:
+            left(area, player);
+            break;
+    }
+    return 1;
 }
 
 int launchScene(Area area, Player* player,int id){
@@ -89,6 +117,7 @@ int launchScene(Area area, Player* player,int id){
         printf("Nothing\n");
     }else if(strcmp(phase, "Rock")==0 || strcmp(phase, "Plant")==0 || strcmp(phase, "Wood")){
         printf("Rock\n");
+        recupResources(area,player,phase, area.chunk[player->y][player->x]);
     }else if(strcmp(phase, "Sell")==0){
         printf("Sell\n");
     }
@@ -101,38 +130,30 @@ char* scenePlay(int id){
 
 void left(Area area,Player *player ){
     if(player->x == 0){
-        area.chunk[player->y][area.widthArea-1]=1;
         player->x=area.widthArea-1;
     }else{
-        area.chunk[player->y][player->x-1]=1;
         player->x=player->x-1;
     }
 
 }
 void high(Area area, Player *player){
     if(player->y == 0){
-        area.chunk[area.heigthArea-1][player->x]=1;
         player->y=area.heigthArea-1;
     }else{
-        area.chunk[player->y-1][player->x]=1;
         player->y--;
     }
 }
 void right(Area area, Player* player){
     if(player->x == area.widthArea-1){
-        area.chunk[player->y][0]=1;
         player->x=0;
     }else{
-        area.chunk[player->y][player->x+1]=1;
         player->x++;
     }
 }
 void bottom(Area area, Player* player){
     if(player->y == area.heigthArea-1){
-        area.chunk[0][player->x]=1;
         player->y=0;
     }else{
-        area.chunk[player->y+1][player->x]=1;
         player->y++;
     }
 }

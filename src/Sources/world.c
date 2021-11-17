@@ -118,7 +118,15 @@ void createPnj(Area area){
     checkCase(area, 2,xY );
 }
 
-
+void upgradeWorld(World* world, Player* player){
+    for (int i = 0; i < 3; ++i) {
+        verifMonster(world->area[i], world->area[i].monster);
+        verifResources(world->area[i], world->area[i].mineral);
+        verifResources(world->area[i], world->area[i].plant);
+        verifResources(world->area[i], world->area[i].wood);
+    }
+    world->area[player->area].chunk[player->y][player->x]=1;
+}
 
 
 

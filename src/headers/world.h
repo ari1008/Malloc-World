@@ -22,7 +22,7 @@ void  displayArea(Area area);
 void createAll(Area area,Monster* monster,TabAll* tabAll, int numberArea);
 void  createTravel(Area area, int numberArea );
 int* checkCase(Area area, int type, int* result);
-
+void upgradeWorld(World* world, Player* player);
 
 #endif // WORLD_H_INCLUDED
 

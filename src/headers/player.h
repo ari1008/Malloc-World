@@ -56,4 +56,6 @@ Item createItemStart(int id, char* name, char* type, int ressource0[2], int ress
 
 char* scenePlay(int id);
 int launchScene(Area area, Player* player,int id);
+int nextCase(Area area,Player *player, int move);
+
 #endif // PLAYER_H_INCLUDED

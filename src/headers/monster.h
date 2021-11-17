@@ -15,6 +15,9 @@
 Monster*  createMonster(Area area,Monster* monster, int numberArea);
 Monster*   newElementMonster(int type, int y, int x);
 void printMonster(Monster* monster);
+
+
+void verifMonster(Area area, Monster* monster);
 // Properties of a monster
 
 

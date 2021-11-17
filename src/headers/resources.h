@@ -37,4 +37,9 @@ ItemTwo* insertCraft(Item* pnj, FILE* filePnj);
 Item* createCraft(Item* notPlayer, int area);
 void printCraft(Item* item);
 
+void verifResources(Area area,Resources* resources);
+void recupResources(Area area,Player* player,char* element, int type);
+void recupMinerals(Area area,Player* player,int type);
+void recupWoods(Area area,Player* player,int type);
+void recupPlants(Area area,Player* player,int type);
 //#endif // RESOURCES_H_INCLUDED

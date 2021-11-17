@@ -18,6 +18,7 @@ Monster* newElementMonster(int type, int y, int x){
     char* name=readLine(RESOURCES, type,2 );
     strcpy(monster->name, name);
     monster->hpCurrent=type;
+    monster->type=type;
     monster->respawnTime=15;
     monster->view=1;
     monster->x=x;
@@ -80,3 +81,13 @@ Monster* createMonster(Area area,Monster* monster, int numberArea){
     return monster;
 }
 
+void verifMonster(Area area, Monster* monster){
+    while (monster!=NULL){
+        if(monster->view==1){
+            area.chunk[monster->y][monster->y]=monster->type;
+        }else{
+            area.chunk[monster->y][monster->y]=0;
+        }
+        monster= (Monster *) monster->next;
+    }
+}

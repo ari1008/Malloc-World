@@ -354,10 +354,50 @@ Item *createItem(char *line) {
 }
 
 void printCraft(Item* item){
-     int count=0;
     while (item!= NULL){
-        printf("%s %d\n",item->name,count);
-        count++;
+        printf("%s\n",item->name);
         item= (Item *) item->next;
     }
 }
+
+void verifResources(Area area,Resources* resources){
+    while (resources!= NULL){
+        if(resources->view==1){
+            area.chunk[resources->positionY][resources->positionY]=resources->id;
+        }else{
+            area.chunk[resources->positionY][resources->positionY]=0;
+        }
+        resources = (Resources *) resources->next;
+    }
+ }
+
+ void recupResources(Area area,Player* player,char* element, int type){
+     if(strcmp(element, "Rock")==0){
+         recupMinerals(area, player, type);
+     }else if(strcmp(element, "Plant")==0){
+         recupPlants(area, player, type);
+     }else if(strcmp(element, "Wood")==0){
+         recupWoods(area, player, type);
+     }
+ }
+
+ void recupMinerals(Area area,Player* player,int type){
+     int number=randomMy(1, 4);
+     for (int i = 0; i < player->numberInventory; ++i) {
+         if(player->inventory[i].id==2 && player->inventory[i].broke==0  && player->area==0){
+                //player->inventory[i].durability
+         }else if(player->inventory[i].id==12 && player->inventory[i].broke==0  && player->area==1){
+
+         }else if(player->inventory[i].id==23 && player->inventory[i].broke==0  && player->area==1){
+
+         }
+     }
+ }
+
+ void recupPlants(Area area,Player* player,int type){
+     printf("Not start\n");
+ }
+
+ void recupWoods(Area area,Player* player,int type){
+     printf("Not start\n");
+ }

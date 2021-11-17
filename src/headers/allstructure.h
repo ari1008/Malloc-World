@@ -78,6 +78,7 @@ typedef struct {
 typedef struct  {
     char name[50];
     int hpCurrent;
+    int type;
     int hpMax;
     const int xpDrop;
     int respawnTime;
