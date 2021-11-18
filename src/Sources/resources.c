@@ -372,8 +372,13 @@ void verifResources(Area area,Resources* resources){
  }
 
  void recupResources(Area area,Player* player,char* element, int type){
+     int sort=0;
+     int* durability=malloc(sizeof(int)*3);
+     durability[0]=10;
+     durability[1]=20;
+     durability[2]=40;
      if(strcmp(element, "Rock")==0){
-         recupMinerals(area, player, type);
+         sort=recupMinerals(area, player, durability, type);
      }else if(strcmp(element, "Plant")==0){
          recupPlants(area, player, type);
      }else if(strcmp(element, "Wood")==0){
@@ -381,16 +386,38 @@ void verifResources(Area area,Resources* resources){
      }
  }
 
- void recupMinerals(Area area,Player* player,int type){
+ int recupMinerals(Area area,Player* player,int* durability,int type){
      int number=randomMy(1, 4);
-     for (int i = 0; i < player->numberInventory; ++i) {
-         if(player->inventory[i].id==2 && player->inventory[i].broke==0  && player->area==0){
-                //player->inventory[i].durability
-         }else if(player->inventory[i].id==12 && player->inventory[i].broke==0  && player->area==1){
-
-         }else if(player->inventory[i].id==23 && player->inventory[i].broke==0  && player->area==1){
-
+     int* ax= malloc(sizeof(int)*player->numberInventory);
+     int print=0;
+     int count=0;
+     int result=-1;
+     int i;
+     for (i=0; i < player->numberInventory; ++i) {
+         if((player->inventory[i].id==2 || player->inventory[i].id==12 || player->inventory[i].id==23) && player->inventory[i].durability==0){
+             if(print==0){
+                 printf("Type in the number of the pickaxe you want.\n");
+                 print++;
+             }
+             printf("%d %s %d\n", i, player->inventory[i].name, player->inventory[i].durability);
+             ax[count]=i;
+             count++;
          }
+     }
+     if(print==0){
+         printf("You don't have a pickaxe or they are broken.\n");
+         return 0;
+     }
+     printf("Chose your pickave or stop press 11\n");
+     do {
+        result=verifIntResources(ax, player->numberInventory);
+     }while(result==-1);
+     if (type==4){
+         recupFinishRessources(player, number, durability[0], result);
+     }else if (type==7){
+         recupFinishRessources(player, number, durability[1], result);
+     }else if(type==10){
+         recupFinishRessources(player, number, durability[2], result);
      }
  }
 
@@ -400,4 +427,23 @@ void verifResources(Area area,Resources* resources){
 
  void recupWoods(Area area,Player* player,int type){
      printf("Not start\n");
+ }
+
+int verifIntResources(int* resources, int size){
+     int count=-1;
+     scanf("%d",&count);
+     if(count==11){
+         printf("Stop\n");
+         return 0;
+     }
+     for(int i=0;i<size;i++){
+         if (resources[i]==count){
+             return resources[i];
+         }
+     }
+    return -1;
+ }
+
+int recupFinishRessources(Player* player, int number, int pourcent, int nbrInventory){
+     return 1;
  }

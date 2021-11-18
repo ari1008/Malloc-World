@@ -39,7 +39,10 @@ void printCraft(Item* item);
 
 void verifResources(Area area,Resources* resources);
 void recupResources(Area area,Player* player,char* element, int type);
-void recupMinerals(Area area,Player* player,int type);
+int  recupMinerals(Area area,Player* player,int* durability, int type);
 void recupWoods(Area area,Player* player,int type);
 void recupPlants(Area area,Player* player,int type);
+
+int verifIntResources(int* resources, int size);
+int recupFinishRessources(Player* player, int number, int pourcent, int nbrInventory);
 //#endif // RESOURCES_H_INCLUDED
