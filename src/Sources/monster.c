@@ -12,6 +12,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/*
+ * Function to create a new monster in the chained list
+ */
 Monster* newElementMonster(int type, int y, int x){
     Monster* monster= malloc(sizeof(Monster));
     monster->hpMax=type;
@@ -27,6 +30,9 @@ Monster* newElementMonster(int type, int y, int x){
     return monster;
 }
 
+/*
+ * Display for debugging for now
+ */
 void printMonster(Monster* monster){
     while (monster != NULL){
         printf("%s\n",monster->name);
@@ -34,6 +40,10 @@ void printMonster(Monster* monster){
     }
 }
 
+/*
+ * This function create the monsters according to the map.
+ * And the interval of the level that they are in the chained list is displayed with the start of the chain pointer.
+ */
 Monster* createMonster(Area area,Monster* monster, int numberArea){
     int xYMonster[2];
     int type;
@@ -80,6 +90,10 @@ Monster* createMonster(Area area,Monster* monster, int numberArea){
     }
     return monster;
 }
+
+/*
+ * This function checks whether the monster has the right to be displayed or not
+ */
 
 void verifMonster(Area area, Monster* monster){
     while (monster!=NULL){

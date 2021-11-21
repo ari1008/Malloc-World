@@ -11,102 +11,9 @@
 #include <stdio.h>
 #include "../headers/resources.h"
 #include "../headers/world.h"
-//  WOOD
-//  Level I
-/*Resources woodI = {
-    .worldId = WOOD_I,
-    .toolType = AXE,
-    .miningLevel = MINING_WOOD,
-    .resourcesDrop.itemId = SPRUCE,
-    .resourcesDrop.quantity = 1,
-    .respawnTime = 0
-};
 
-//  Level II
-Resources woodII = {
-    .worldId = WOOD_II,
-    .toolType = AXE,
-    .miningLevel = MINING_STONE,
-    .resourcesDrop.itemId = BEECH,
-    .resourcesDrop.quantity = 1,
-    .respawnTime = 0
-};
-
-//  Level III
-Resources woodIII = {
-    .worldId = WOOD_III,
-    .toolType = AXE,
-    .miningLevel = MINING_IRON,
-    .resourcesDrop.itemId = OAK,
-    .resourcesDrop.quantity = 1,
-    .respawnTime = 0
-};
-
-//  ROCK
-//  Level I
-Resources rockI = {
-    .worldId = ROCK_I,
-    .toolType = PICKAXE,
-    .miningLevel = MINING_WOOD,
-    .resourcesDrop.itemId = STONE,
-    .resourcesDrop.quantity = 1,
-    .respawnTime = 0
-};
-
-//  Level II
-Resources rockII = {
-    .worldId = ROCK_II,
-    .toolType = PICKAXE,
-    .miningLevel = MINING_STONE,
-    .resourcesDrop.itemId = IRON,
-    .resourcesDrop.quantity = 1,
-    .respawnTime = 0
-};
-
-//  Level III
-Resources rockIII = {
-    .worldId = ROCK_III,
-    .toolType = PICKAXE,
-    .miningLevel = MINING_IRON,
-    .resourcesDrop.itemId = DIAMOND,
-    .resourcesDrop.quantity = 1,
-    .respawnTime = 0
-};
-
-//  PLANT
-//  Level I
-Resources plantI = {
-    .worldId = PLANT_I,
-    .toolType = BILLHOOK,
-    .miningLevel = MINING_WOOD,
-    .resourcesDrop.itemId = GRASS,
-    .resourcesDrop.quantity = 1,
-    .respawnTime = 0
-};
-
-//  Level II
-Resources plantII = {
-    .worldId = PLANT_II,
-    .toolType = BILLHOOK,
-    .miningLevel = MINING_STONE,
-    .resourcesDrop.itemId = LAVENDER,
-    .resourcesDrop.quantity = 1,
-    .respawnTime = 0
-};
-
-//  Level III
-Resources plantIII = {
-    .worldId = PLANT_III,
-    .toolType = BILLHOOK,
-    .miningLevel = MINING_IRON,
-    .resourcesDrop.itemId = HEMP,
-    .resourcesDrop.quantity = 1,
-    .respawnTime = 0
-};
-*/
-
-
-
+/*This function allows you to build a resource during the construction of the map.
+ * This is why we need the type and these coordinates*/
  Resources* newElementResources( int type, int y, int x){
     struct Resources* resource= malloc(sizeof(Resources));
     resource->id=type;
@@ -117,13 +24,17 @@ Resources plantIII = {
     resource->next=NULL;
     return resource;
 }
-
+/*
+ * Function that calls the three functions to create the chained list of the card
+ */
 void createRessource(Area area, TabAll* tabAll , int numberArea){
     tabAll->plant=createPlant(area,tabAll->plant, numberArea);
     tabAll->wood=createWood(area,tabAll->wood, numberArea);
     tabAll->mineral=createMineral(area,tabAll->mineral, numberArea);
 }
-
+/*
+ * This function creates the plants according to the map. It emerges a chained list
+ */
 Resources* createPlant(Area area,Resources* resources, int numberArea){
     int xYPlant[2];
     Resources* resources1;
@@ -166,6 +77,9 @@ Resources* createPlant(Area area,Resources* resources, int numberArea){
     return resources;
 }
 
+/*
+ * This function creates the Woods according to the map. It emerges a chained list
+ */
 Resources*  createWood(Area area,Resources* resources, int numberArea){
     int xYWood[2];
     Resources* resources1;
@@ -208,6 +122,9 @@ Resources*  createWood(Area area,Resources* resources, int numberArea){
     return resources;
 }
 
+/*
+ * This function creates the Minerals according to the map. It emerges a chained list
+ */
 Resources* createMineral(Area area,Resources* resources, int numberArea){
     int xYMineral[2];
     Resources* resources1;
@@ -249,14 +166,19 @@ Resources* createMineral(Area area,Resources* resources, int numberArea){
     }
     return resources;
 }
-
+/*
+ * It's a debug function for now to see if the resources are displayed well or are scoper here
+ */
 void printResource(Resources* resource){
     while (resource != NULL){
         printf("%d\n",resource->id);
         resource= (Resources *) resource->next;
     }
 }
-
+/*
+ * This function opens the correct pnj (| [1-2]).
+ * Txt file depending on the card. And launch the function which creates the chained list
+ */
 Item* createCraft(Item* notPlayer, int area){
     Item* create=notPlayer;
     ItemTwo*  liste;
@@ -285,6 +207,9 @@ Item* createCraft(Item* notPlayer, int area){
     return liste->item;
 }
 
+/*
+ * This function takes the png file line by line. To be able to insert them in a chained list
+ */
 ItemTwo* insertCraft(Item* pnj, FILE* filePnj){
      ItemTwo* iteamAll= malloc(sizeof(Item));
     char line[256];
@@ -352,7 +277,9 @@ Item *createItem(char *line) {
     }
     return item;
 }
-
+/*
+ * It's a debug function for now to see if the Item are displayed well or are scoper here
+ */
 void printCraft(Item* item){
     while (item!= NULL){
         printf("%s\n",item->name);
@@ -360,6 +287,9 @@ void printCraft(Item* item){
     }
 }
 
+/*
+ * See if the resource should be displayed on the map
+ */
 void verifResources(Area area,Resources* resources){
     while (resources!= NULL){
         if(resources->view==1){
@@ -370,7 +300,10 @@ void verifResources(Area area,Resources* resources){
         resources = (Resources *) resources->next;
     }
  }
-
+/*
+ * Allows you to retrieve a resource on the card according to its type
+ * it dispatches on the corresponding function
+ */
  void recupResources(Area area,Player* player,char* element, int type){
      int sort=0;
      int* durability=malloc(sizeof(int)*3);
@@ -385,7 +318,9 @@ void verifResources(Area area,Resources* resources){
          recupWoods(area, player, type);
      }
  }
-
+/*
+ * The function to recover minerals
+ */
  int recupMinerals(Area area,Player* player,int* durability,int type){
      int number=randomMy(1, 4);
      int* ax= malloc(sizeof(int)*player->numberInventory);
@@ -421,10 +356,19 @@ void verifResources(Area area,Resources* resources){
      }
  }
 
+ /*
+  *
+  * This function allows you to recover plants
+  */
  void recupPlants(Area area,Player* player,int type){
      printf("Not start\n");
  }
 
+
+/*
+*
+* This function allows you to recover wood
+*/
  void recupWoods(Area area,Player* player,int type){
      printf("Not start\n");
  }

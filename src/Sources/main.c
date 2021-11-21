@@ -32,7 +32,9 @@
 
 
 
-
+/*
+ * Start the program generously for everyone and the card
+ */
 int main(void) {
     srand(time(NULL));
     World *world= generateWorld(1);
@@ -41,6 +43,9 @@ int main(void) {
     return 0;
 }
 
+/*
+ *Random function to give the x and y size of the map
+ */
 int randomWorld(){
     int nombre = 0;
     // Initialisation de la donnée seed
@@ -49,6 +54,9 @@ int randomWorld(){
 
 }
 
+/*
+ * Allows you to read a file line by line
+ */
 char* readLine(char* filename, int type, int number){
     char* path=malloc(sizeof(char)*62);
     strcpy(path,PATH );
@@ -76,6 +84,9 @@ char* readLine(char* filename, int type, int number){
 
 }
 
+/*
+ * Retrieves the information between two; in what has in the row data.
+ */
 char* information(char* line, int number){
     char* separators=";";
     int count=0;

@@ -12,10 +12,9 @@
 #include "../headers/player.h"
 #include "../headers/main.h"
 
-
-//  Player default properties at the start of the game
-
-
+/*
+ *This function creates the day and its inventory
+ */
 Player*  createPlayer(){
     Player *player= malloc(sizeof(Player));
     player->level = 1;
@@ -48,6 +47,9 @@ Player*  createPlayer(){
     return player;
 }
 
+/*
+ * This function allows you to create an item in a very precise way with all the possible parameters to customize
+ */
 Item createItemStart(int id, char* name, char* type, int* ressource0, int* ressource1, int durability, int damage, int hp){
     Item inventory;
     inventory.id=id;
@@ -64,10 +66,16 @@ Item createItemStart(int id, char* name, char* type, int* ressource0, int* resso
     return inventory;
 }
 
+/*
+ * Allows you to launch the function that allows you to move
+ */
 void play(World* world, Player* player){
     move(world,player);
 }
 
+/*
+ * It is a loop that allows the player to move in space according to these choices in the small menu
+ */
 void move(World *world, Player* player){
     int choice[2];
     int sceneSucces;
@@ -89,6 +97,9 @@ void move(World *world, Player* player){
     ;
 }
 
+/*
+ * Allows to update the player where he is according to what he has chosen
+ */
 int nextCase(Area area,Player *player, int move){
     switch (move) {
         case 0:
@@ -107,6 +118,10 @@ int nextCase(Area area,Player *player, int move){
     return 1;
 }
 
+/*
+ * Starts the scene that must be done for the player's action,
+ * either fighting a monster, recovering a resource, entering a passage.
+ */
 int launchScene(Area area, Player* player,int id){
     char* phase=scenePlay(id);
     if(strcmp(phase, "Travel")==0){
@@ -123,11 +138,18 @@ int launchScene(Area area, Player* player,int id){
     }
     return 1;
 }
+
+/*
+ * Allows to retrieve its type from the box travel, Monster, Nothing, etc.
+ */
 char* scenePlay(int id){
     char* scene= readLine(RESOURCES, id,3);
     return scene;
 }
 
+/*
+ * Allows to put the player where he is on the next turn left
+ */
 void left(Area area,Player *player ){
     if(player->x == 0){
         player->x=area.widthArea-1;
@@ -136,6 +158,10 @@ void left(Area area,Player *player ){
     }
 
 }
+
+/*
+ * Allows to put the player where he is on the next turn  high
+ */
 void high(Area area, Player *player){
     if(player->y == 0){
         player->y=area.heigthArea-1;
@@ -143,6 +169,10 @@ void high(Area area, Player *player){
         player->y--;
     }
 }
+
+/*
+ * Allows to put the player where he is on the next turn right
+ */
 void right(Area area, Player* player){
     if(player->x == area.widthArea-1){
         player->x=0;
@@ -150,6 +180,10 @@ void right(Area area, Player* player){
         player->x++;
     }
 }
+
+/*
+ * Allows to put the player where he is on the next turn bottom
+ */
 void bottom(Area area, Player* player){
     if(player->y == area.heigthArea-1){
         player->y=0;
@@ -158,6 +192,10 @@ void bottom(Area area, Player* player){
     }
 }
 
+/*
+ * this function allows us to make a table of 4 boxes of
+ * what the day can cause to fall on a monster etc.
+ */
 int* verification(Area area, int y, int x){
     int *movePosition = malloc(sizeof(int)*4);
     movePosition[0]= moveHigh(area,y, x);
@@ -166,7 +204,9 @@ int* verification(Area area, int y, int x){
     movePosition[3]= moveLeft(area,y, x);
     return movePosition;
 }
-
+/*
+ * This function returns what is in box a High of player
+ */
 int moveHigh(Area area, int y,int x){
     if(y==area.heigthArea-1){
         return area.chunk[0][x];
@@ -174,7 +214,9 @@ int moveHigh(Area area, int y,int x){
         return area.chunk[y+1][x];
     }
 }
-
+/*
+ * This function returns what is in box a low of player
+ */
 int moveLow(Area area, int y,int x){
     if(0==y){
         return area.chunk[area.heigthArea-1][x];
@@ -183,6 +225,9 @@ int moveLow(Area area, int y,int x){
     }
 }
 
+/*
+ * This function returns what is in box a right of player
+ */
 int moveRight(Area area, int y, int x){
     if(x==area.widthArea-1){
         return area.chunk[y][0];
@@ -191,6 +236,9 @@ int moveRight(Area area, int y, int x){
     }
 }
 
+/*
+ * This function returns what is in box a left of player
+ */
 int moveLeft(Area area, int y, int x){
     if(x==0){
         return area.chunk[y][area.widthArea-1];
@@ -199,6 +247,10 @@ int moveLeft(Area area, int y, int x){
     }
 }
 
+/*
+ * Allows to display all the possibilities that the player thanks to this possition.
+ * it is this function which will create the small menu
+ */
 int* displayPosition(int* position, int area, int* choice){
     char compass[4][6]={"High\0","Right\0","Low\0","Left\0"};
     int count=0;
@@ -226,6 +278,9 @@ int* displayPosition(int* position, int area, int* choice){
     return choseNumber(count, mov, box, choice);
 }
 
+/*
+ * This function to display in the small menu of choice when there is a monster and what type it is and or
+ */
 void displayMonster(int monster, char* compass, int count){
     if(monster==99){
         printf("\n%d: Face you the final boss  to %s",count, compass);
@@ -234,6 +289,9 @@ void displayMonster(int monster, char* compass, int count){
     }
 }
 
+/*
+ * This function to display in the small menu of choice when there is a pnj and what type it is and or
+ */
 void displayPnj(int area, char* compass, int count){
     switch (area) {
         case 1:
@@ -248,6 +306,9 @@ void displayPnj(int area, char* compass, int count){
     }
 }
 
+/*
+ * This function allows you to display perfectly in the menu by launching the correct function
+ */
 void displayResources(int position, char* compass, int count){
     if(position%3==0){
         displayPlant(position,  compass, count);
@@ -258,6 +319,9 @@ void displayResources(int position, char* compass, int count){
     }
 }
 
+/*
+ * This function to display in the small menu of choice when there is a mineral and what type it is and or
+ */
 void displayMineral(int mineral, char* compass, int count){
     switch (mineral) {
         case 4:
@@ -272,6 +336,9 @@ void displayMineral(int mineral, char* compass, int count){
     }
 }
 
+/*
+ * This function to display in the small choice menu when there is a wood and what type it is and or
+ */
 void displayWood(int wood, char* compass, int count){
     switch (wood) {
         case 5:
@@ -286,6 +353,9 @@ void displayWood(int wood, char* compass, int count){
     }
 }
 
+/*
+ * This function to display in the small menu of choice when there is a plant and what type it is and or
+ */
 void displayPlant(int plant, char* compass, int count){
     switch (plant) {
         case 3:
@@ -301,6 +371,9 @@ void displayPlant(int plant, char* compass, int count){
 
 }
 
+/*
+ * This function to display in the small choice menu when there is a passage and what type it is and or
+ */
 void displayTravel(int position, int area, char* compass, int count){
     if(area==1){
         printf("\n%d: You can teleport level %d to %s",count, area+1, compass );
@@ -316,6 +389,9 @@ void displayTravel(int position, int area, char* compass, int count){
 
 }
 
+/*
+ * This function allows you to see if the number chosen by the player to advance is possible
+ */
 int* choseNumber(int count,int* mov,  int* box, int* choice){
     int number;
     char compass[4][6]={"High\0","Right\0","Low\0","Left\0"};

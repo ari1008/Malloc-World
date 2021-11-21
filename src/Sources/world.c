@@ -15,6 +15,7 @@
 //ajouter dans la fonction
 /*
  ** To create the world
+ * And all the things you need like monsters, resources, monsters and also points of sale and map passes.
  */
 World *generateWorld (int seed){
     World *worldAll= malloc(sizeof(World));
@@ -40,8 +41,7 @@ World *generateWorld (int seed){
 
 }
 /*
- * * size of short 0 à 65 535
- * * but the max size is 100
+ * * Allows you to initialize the card for one area
  */
 void  generateArea(Area area,TabAll* tabAll, Monster* monster, int numberArea){
     for (int i = 0; i < area.heigthArea; i++) {
@@ -60,7 +60,9 @@ void  generateArea(Area area,TabAll* tabAll, Monster* monster, int numberArea){
     createAll( area, monster, tabAll, numberArea);
 
 }
-
+/*
+ * Function which groups together all that must be created for each card, monsters, PNJs, resources and passages.
+ */
 void createAll(Area area,Monster* monster,TabAll* tabAll, int numberArea){
     createTravel(area, numberArea);
     monster=createMonster(area,monster, numberArea);
@@ -68,12 +70,20 @@ void createAll(Area area,Monster* monster,TabAll* tabAll, int numberArea){
     createRessource(area, tabAll, numberArea);
     tabAll->monster=monster;
 }
+
+
+/*
+ * It is a function that randomizes between two intervals.
+ */
 int randomMy(int min, int max){
     int nombre;
     nombre = (rand() % (max - min + 1)) + min;
     return nombre;
 }
 
+/*
+ * This function allows you to display a map
+ */
 void  displayArea(Area area){
     const char * command = "clear";
     system(command);
@@ -85,6 +95,9 @@ void  displayArea(Area area){
     }
 }
 
+/*
+ *Function to put on the card and in the structure where the passages from card to card are in X and Y
+ */
 void createTravel(Area area, int numberArea){
     switch (numberArea) {
         case 0:
@@ -97,7 +110,9 @@ void createTravel(Area area, int numberArea){
 
     }
 }
-
+/*
+ * This function just returns the position of an empty cell.
+ */
 
 int* checkCase(Area area, int type, int* result){
     int count=0;
@@ -113,11 +128,18 @@ int* checkCase(Area area, int type, int* result){
     return  result;
 }
 
+/*
+ * Function to randomly put a PNJ on the map
+ */
 void createPnj(Area area){
     int xY[2];
     checkCase(area, 2,xY );
 }
 
+/*
+ *This function allows you to update all the maps before displaying them.
+ * If a monster is defeated or a resource is regained.
+ */
 void upgradeWorld(World* world, Player* player){
     for (int i = 0; i < 3; ++i) {
         verifMonster(world->area[i], world->area[i].monster);
