@@ -6,7 +6,7 @@
 #define MALLOC_WORLD_ALLSTRUCTURE_H
 #include <bits/types/FILE.h>
 #define  PATH "/home/ari/Documents/C/Malloc-World/resources/"
-#define  MONSTER "item.txt"
+#define  ITEM "item.txt"
 #define  RESOURCES "resources.txt"
 #define PNJ "pnj.txt\0"
 #define PNJ1 "pnj1.txt\0"

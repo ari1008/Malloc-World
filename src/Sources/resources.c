@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include "../headers/resources.h"
 #include "../headers/world.h"
+#include "../headers/main.h"
 
 /*This function allows you to build a resource during the construction of the map.
  * This is why we need the type and these coordinates*/
@@ -325,35 +326,62 @@ void verifResources(Area area,Resources* resources){
      int number=randomMy(1, 4);
      int* ax= malloc(sizeof(int)*player->numberInventory);
      int print=0;
-     int count=0;
+     int pourcent=0;
      int result=-1;
-     int i;
-     for (i=0; i < player->numberInventory; ++i) {
-         if((player->inventory[i].id==2 || player->inventory[i].id==12 || player->inventory[i].id==23) && player->inventory[i].durability==0){
-             if(print==0){
-                 printf("Type in the number of the pickaxe you want.\n");
-                 print++;
+    switch (type) {
+        case 4:
+            pourcent=durability[0];
+            break;
+        case 7:
+            pourcent=durability[1];
+            break;
+        case 10:
+            pourcent=durability[2];
+    }
+     for(int i=0; i< player->numberInventory;i++){
+         if (player->inventory[i].broke==0){
+             if(player->inventory[i].id==2 && pourcent==10){
+                 recupMineral(area, player, pourcent, number, i, type );
+             }else if (player->inventory[i].id==12 && (pourcent==10 || pourcent==20)){
+                 recupMineral(area, player, pourcent, number, i, type);
+             }else if(player->inventory[i].id==23){
+                 recupMineral(area, player, pourcent, number, i, type);
              }
-             printf("%d %s %d\n", i, player->inventory[i].name, player->inventory[i].durability);
-             ax[count]=i;
-             count++;
          }
      }
-     if(print==0){
-         printf("You don't have a pickaxe or they are broken.\n");
-         return 0;
-     }
-     printf("Chose your pickave or stop press 11\n");
-     do {
-        result=verifIntResources(ax, player->numberInventory);
-     }while(result==-1);
-     if (type==4){
-         recupFinishRessources(player, number, durability[0], result);
-     }else if (type==7){
-         recupFinishRessources(player, number, durability[1], result);
-     }else if(type==10){
-         recupFinishRessources(player, number, durability[2], result);
-     }
+ }
+
+void recupMineral(Area area,Player* player,int durability, int numberResources, int indice, int type){
+    int typeInventory= atoi(readLine(RESOURCES , type, 4));
+    int count=0;
+     player->inventory[indice].durability=(100-durability)/player->inventory[indice].durability*100;
+    if (player->inventory[indice].durability<=0){
+        player->inventory[indice].durability=0;
+        player->inventory[indice].broke=1;
+    }
+    for(int i=0;i< player->numberInventory; i++){
+        if (player->inventory[i].id==typeInventory && player->inventory[i].number<20){
+              player->inventory[i].number= (player->inventory[i].number + numberResources >20) ? 20 : player->inventory[i].number + numberResources;
+              count++;
+            break;
+        }
+    }
+    if (count==0 && player->numberInventory<10){
+        player->numberInventory++;
+        player->inventory[player->numberInventory].id=typeInventory;
+        createNewRessourceInventory(player->inventory[player->numberInventory], type, numberResources, readLine(ITEM,type, 2), readLine(ITEM,type, 3));
+    }else if(count==0 && player->numberInventory==10){
+        printf("There is no more space in the inventory\n");
+    }
+ }
+
+void createNewRessourceInventory(Item item, int id, int number, char* name, char* type){
+     item.id=id;
+     item.number=number;
+    strcpy(item.name, name);
+    strcpy(item.type, type);
+    item.next=NULL;
+    item.broke=0;
  }
 
  /*

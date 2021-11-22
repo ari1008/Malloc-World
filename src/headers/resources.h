@@ -40,8 +40,10 @@ void printCraft(Item* item);
 void verifResources(Area area,Resources* resources);
 void recupResources(Area area,Player* player,char* element, int type);
 int  recupMinerals(Area area,Player* player,int* durability, int type);
+void recupMineral(Area area,Player* player,int durability, int numberResources, int indice, int type);
 void recupWoods(Area area,Player* player,int type);
 void recupPlants(Area area,Player* player,int type);
+void createNewRessourceInventory(Item item, int id, int number, char* name, char* type);
 
 int verifIntResources(int* resources, int size);
 int recupFinishRessources(Player* player, int number, int pourcent, int nbrInventory);
