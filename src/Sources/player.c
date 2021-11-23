@@ -84,9 +84,10 @@ void move(World *world, Player* player){
     displayArea(world->area[player->area]);
     do{
         int *verif = verification(world->area[player->area], player->y, player->x);
-        printf("choice %d %d\n", choice[0], choice[1]);
+        //
         world->area[player->area].chunk[player->y][player->x] = 0;
         displayPosition(verif, player->area, choice);
+        printf("choice %d %d\n", choice[0], choice[1]);
         sceneSucces=launchScene(world->area[player->area], player, choice[1]);
         nextCase(world->area[player->area],player, choice[0]);
         upgradeWorld(world, player);
@@ -123,7 +124,9 @@ int nextCase(Area area,Player *player, int move){
  * either fighting a monster, recovering a resource, entering a passage.
  */
 int launchScene(Area area, Player* player,int id){
-    char* phase=scenePlay(id);
+    char* phase= malloc(sizeof(char)*50);
+    strcpy(phase, scenePlay(id));
+    printf("%s\n", phase);
     if(strcmp(phase, "Travel")==0){
         printf("Travel\n");
     }else if(strcmp(phase, "Monster")==0){
@@ -136,6 +139,7 @@ int launchScene(Area area, Player* player,int id){
     }else if(strcmp(phase, "Sell")==0){
         printf("Sell\n");
     }
+    free(phase);
     return 1;
 }
 
@@ -256,7 +260,6 @@ int* displayPosition(int* position, int area, int* choice){
     int count=0;
     int mov[4]={0,0,0,0};
     int box[4]={0,0,0,0};
-
     for(int i=0; i<4 ; i++){
         if(position[i]==-2 || position[i]==-3) {
             displayTravel(position[i], area, (char *) compass[i], count);
@@ -273,6 +276,9 @@ int* displayPosition(int* position, int area, int* choice){
             mov[count]=i;
             count++;
             box[count]=position[i];
+        }
+        for (int j = 0; j < 4; ++j) {
+            printf(" box[%d]=%d", j,box[j]);
         }
     }
     return choseNumber(count, mov, box, choice);

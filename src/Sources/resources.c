@@ -307,6 +307,7 @@ void verifResources(Area area,Resources* resources){
  */
  void recupResources(Area area,Player* player,char* element, int type){
      int sort=0;
+    printResource("Element %s\n");
      int* durability=malloc(sizeof(int)*3);
      durability[0]=10;
      durability[1]=20;
