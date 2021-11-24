@@ -84,7 +84,6 @@ void move(World *world, Player* player){
     displayArea(world->area[player->area]);
     do{
         int *verif = verification(world->area[player->area], player->y, player->x);
-        //
         world->area[player->area].chunk[player->y][player->x] = 0;
         displayPosition(verif, player->area, choice);
         printf("choice %d %d\n", choice[0], choice[1]);
@@ -277,9 +276,6 @@ int* displayPosition(int* position, int area, int* choice){
             count++;
             box[count]=position[i];
         }
-        for (int j = 0; j < 4; ++j) {
-            printf(" box[%d]=%d", j,box[j]);
-        }
     }
     return choseNumber(count, mov, box, choice);
 }
@@ -414,9 +410,9 @@ int* choseNumber(int count,int* mov,  int* box, int* choice){
             }else if(strcmp(compass[mov[number]],compass[2])==0){
                 choice[0]=2;
                 choice[1]=box[2];
-            }else if(strcmp(compass[mov[number]],compass[3])==0){
-                choice[0]=3;
-                choice[1]=box[3];
+            }else if(strcmp(compass[mov[number]],compass[3])==0) {
+                choice[0] = 3;
+                choice[1] = box[3];
             }
             return choice;
         }
