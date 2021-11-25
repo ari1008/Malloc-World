@@ -85,7 +85,7 @@ void move(World *world, Player* player){
     do{
         int *verif = verification(world->area[player->area], player->y, player->x);
         world->area[player->area].chunk[player->y][player->x] = 0;
-        displayPosition(verif, player->area, choice);
+        position(verif, player->area, choice);
         printf("choice %d %d\n", choice[0], choice[1]);
         sceneSucces=launchScene(world->area[player->area], player, choice[1]);
         nextCase(world->area[player->area],player, choice[0]);
@@ -254,42 +254,8 @@ int moveLeft(Area area, int y, int x){
  * Allows to display all the possibilities that the player thanks to this possition.
  * it is this function which will create the small menu
  */
-int* displayPosition(int* position, int area, int* choice){
-    char compass[4][6]={"High\0","Right\0","Low\0","Left\0"};
-    int count=0;
-    int mov[4]={0,0,0,0};
-    int box[4]={0,0,0,0};
-    for(int i=0; i<4 ; i++){
-        if(position[i]==-2 || position[i]==-3) {
-            displayTravel(position[i], area, (char *) compass[i], count);
-        }else if(position[i]==0){
-            printf("\n%d: You can go %s",count, compass[i]);
-        }else if(position[i]==2){
-            displayPnj(area, (char *) compass, count);
-        }else if(position[i]<=11 && position[i]>=3){
-            displayResources(position[i],  (char *) compass[i], count);
-        }else if(position[i]<=12){
-            displayMonster(position[i], (char *) compass[i], count);
-        }
-        if(position[i]!=-1){
-            mov[count]=i;
-            count++;
-            box[count]=position[i];
-        }
-    }
-    return choseNumber(count, mov, box, choice);
-}
 
-/*
- * This function to display in the small menu of choice when there is a monster and what type it is and or
- */
-void displayMonster(int monster, char* compass, int count){
-    if(monster==99){
-        printf("\n%d: Face you the final boss  to %s",count, compass);
-    } else{
-        printf("\n%d: Face you against a level %d monster to %s",count,monster, compass);
-    }
-}
+
 
 /*
  * This function to display in the small menu of choice when there is a pnj and what type it is and or
@@ -308,70 +274,7 @@ void displayPnj(int area, char* compass, int count){
     }
 }
 
-/*
- * This function allows you to display perfectly in the menu by launching the correct function
- */
-void displayResources(int position, char* compass, int count){
-    if(position%3==0){
-        displayPlant(position,  compass, count);
-    }else if(position==5 || position==8 || position==11){
-        displayWood(position, compass, count);
-    }else if(position==4 || position==7 || position==10){
-        displayMineral(position, compass, count);
-    }
-}
 
-/*
- * This function to display in the small menu of choice when there is a mineral and what type it is and or
- */
-void displayMineral(int mineral, char* compass, int count){
-    switch (mineral) {
-        case 4:
-            printf("\n%d: You can mine Rock to %s",count, compass );
-            break;
-        case 7:
-            printf("\n%d: You can mine Iron to %s",count, compass );
-            break;
-        case 10:
-            printf("\n%d: You can mine Diamond to %s",count, compass );
-            break;
-    }
-}
-
-/*
- * This function to display in the small choice menu when there is a wood and what type it is and or
- */
-void displayWood(int wood, char* compass, int count){
-    switch (wood) {
-        case 5:
-            printf("\n%d: You can  cut Fir to %s",count, compass );
-            break;
-        case 8:
-            printf("\n%d: You can  cut Beech to %s",count, compass );
-            break;
-        case 11:
-            printf("\n%d: You can cut Oak to %s",count, compass );
-            break;
-    }
-}
-
-/*
- * This function to display in the small menu of choice when there is a plant and what type it is and or
- */
-void displayPlant(int plant, char* compass, int count){
-    switch (plant) {
-        case 3:
-            printf("\n%d: You can collect Grass to %s",count, compass );
-            break;
-        case 6:
-            printf("\n%d: You can collect Lavender to %s",count, compass );
-            break;
-        case 9:
-            printf("\n%d: You can collect Hemp to %s",count, compass );
-            break;
-    }
-
-}
 
 /*
  * This function to display in the small choice menu when there is a passage and what type it is and or
@@ -420,3 +323,32 @@ int* choseNumber(int count,int* mov,  int* box, int* choice){
     } while (1);
 }
 
+int* position(int* position, int area, int* choice){
+    char compass[4][6]={"High\0","Right\0","Low\0","Left\0"};
+    int count=0;
+    int mov[4]={0,0,0,0};
+    int box[4]={0,0,0,0};
+    for (int i = 0; i < 4; ++i) {
+        if (position[i]==0){
+            printf("\n%d: You can go %s",count, compass[i]);
+        }else if(strcmp(readLine(RESOURCES, position[i],3 ),"Plant")==0){
+            printf("\n%d: You can collect Grass to %s",count, readLine(RESOURCES, position[i],2 ),(char *) compass[i]);
+        }else if(strcmp(readLine(RESOURCES, position[i],3 ),"Rock")==0){
+            printf("\n%d: You can mine %s to %s",count, readLine(RESOURCES, position[i],2 ), compass[i]);
+        }else if (strcmp(readLine(RESOURCES, position[i],3 ),"Wood")==0){
+            printf("\n%d: You can  cut %s to %s",count, readLine(RESOURCES, position[i],2 ), compass[i]);
+        }else if(strcmp(readLine(RESOURCES, position[i],3 ),"Monster")==0){
+            printf("\n%d: Face you against a level %d monster to %s",count,position[i], compass[i]);
+        }else if(position[i]==2){
+            displayPnj(area, (char *) compass[i], count);
+        }else if(position[i]==-3 || position[i]==-2){
+            displayTravel(position[i], area, (char *) compass[i], count);
+        }
+        if(position[i]!=-1){
+            mov[count]=i;
+            count++;
+            box[count]=position[i];
+        }
+    }
+    return choseNumber(count, mov, box, choice);
+}

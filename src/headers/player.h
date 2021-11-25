@@ -16,11 +16,6 @@
 #include "items.h"
 
 //   Properties of player inventory
-typedef struct  {
-    Item armor[1];
-    Item weapon[3];
-    Item slot[10];
-} Inventory;
 
 //  Properties of a player
 
@@ -36,13 +31,10 @@ int moveLow(Area area, int y, int x);
 int moveLeft(Area area, int y, int x);
 
 int* displayPosition(int* position, int area, int* choice);
+int* position(int* position, int area, int* choice);
 void displayTravel(int position, int area, char* compass, int count);
 void displayResources(int position, char* compass, int count);
-void displayPlant(int plant, char* compass, int count);
-void displayWood(int wood, char* compass, int count);
-void displayMineral(int mineral, char* compass, int count);
 void displayPnj(int area, char* compass, int count);
-void displayMonster(int monster, char* compass, int count);
 
 void bottom(Area area, Player* player);
 void right( Area area, Player* player);
@@ -57,5 +49,6 @@ Item createItemStart(int id, char* name, char* type, int ressource0[2], int ress
 char* scenePlay(int id);
 int launchScene(Area area, Player* player,int id);
 int nextCase(Area area,Player *player, int move);
+
 
 #endif // PLAYER_H_INCLUDED
