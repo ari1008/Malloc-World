@@ -420,3 +420,4 @@ int verifIntResources(int* resources, int size){
 int recupFinishRessources(Player* player, int number, int pourcent, int nbrInventory){
      return 1;
  }
+

@@ -94,7 +94,8 @@ void move(World *world, Player* player){
         printf("If you stop 6\n");
         scanf("%d",&stop);
     }while(stop !=6);
-    ;
+    toWrite(world, player);
+    freeAll(world, player);
 }
 
 /*
