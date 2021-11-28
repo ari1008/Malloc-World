@@ -84,9 +84,9 @@ void move(World *world, Player* player){
     displayArea(world->area[player->area]);
     do{
         int *verif = verification(world->area[player->area], player->y, player->x);
-        world->area[player->area].chunk[player->y][player->x] = 0;
         position(verif, player->area, choice);
         printf("choice %d %d\n", choice[0], choice[1]);
+        world->area[player->area].chunk[player->y][player->x] = 0;
         sceneSucces=launchScene(world->area[player->area], player, choice[1]);
         nextCase(world->area[player->area],player, choice[0]);
         upgradeWorld(world, player);
